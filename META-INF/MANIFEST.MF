@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+ATG-Product: GenTools
+ATG-Required: DAS DPS DSS REST
+ATG-Class-Path: build/classes.jar lib/scala-library.jar
+ATG-Config-Path:  src/main/config/
+ATG-Client-Class-Path: build/classes.jar lib/scala-library.jar
