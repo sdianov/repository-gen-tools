@@ -31,7 +31,6 @@ object Test1 extends App {
 
   gen.writeFiles(outPath)
 
-
   Thread.sleep(500)
 
   mLogger.log(Level.INFO, "Stop Nucleus")
