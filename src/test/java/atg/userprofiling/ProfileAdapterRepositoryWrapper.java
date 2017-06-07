@@ -2,6 +2,7 @@ package atg.userprofiling;
 
 import atg.adapter.gsa.GSARepository;
 import atg.repository.MutableRepositoryItem;
+import atg.repository.RepositoryItem;
 
 public class ProfileAdapterRepositoryWrapper {
 
@@ -61,291 +62,319 @@ public class ProfileAdapterRepositoryWrapper {
             wrapped = pRepositoryItem;
         }
 
-        // securityStatus
-        public Object getSecurityStatus() {
-            return wrapped.getPropertyValue(SECURITYSTATUS_PROP);
+        // securityStatus : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getSecurityStatus() {
+            return (java.lang.Integer) wrapped.getPropertyValue(SECURITYSTATUS_PROP);
         }
 
-        public void setSecurityStatus(Object value){
+        public void setSecurityStatus(java.lang.Integer value){
             wrapped.setPropertyValue(SECURITYSTATUS_PROP, value);
         }
         
-        // description
-        public Object getDescription() {
-            return wrapped.getPropertyValue(DESCRIPTION_PROP);
+        // description : java.lang.String
+        // writable: true
+        public java.lang.String getDescription() {
+            return (java.lang.String) wrapped.getPropertyValue(DESCRIPTION_PROP);
         }
 
-        public void setDescription(Object value){
+        public void setDescription(java.lang.String value){
             wrapped.setPropertyValue(DESCRIPTION_PROP, value);
         }
         
-        // email
-        public Object getEmail() {
-            return wrapped.getPropertyValue(EMAIL_PROP);
+        // email : java.lang.String
+        // writable: true
+        public java.lang.String getEmail() {
+            return (java.lang.String) wrapped.getPropertyValue(EMAIL_PROP);
         }
 
-        public void setEmail(Object value){
+        public void setEmail(java.lang.String value){
             wrapped.setPropertyValue(EMAIL_PROP, value);
         }
         
-        // password
-        public Object getPassword() {
-            return wrapped.getPropertyValue(PASSWORD_PROP);
+        // password : java.lang.String
+        // writable: true
+        public java.lang.String getPassword() {
+            return (java.lang.String) wrapped.getPropertyValue(PASSWORD_PROP);
         }
 
-        public void setPassword(Object value){
+        public void setPassword(java.lang.String value){
             wrapped.setPropertyValue(PASSWORD_PROP, value);
         }
         
-        // realmId
-        public Object getRealmId() {
-            return wrapped.getPropertyValue(REALMID_PROP);
+        // realmId : java.lang.String
+        // writable: true
+        public java.lang.String getRealmId() {
+            return (java.lang.String) wrapped.getPropertyValue(REALMID_PROP);
         }
 
-        public void setRealmId(Object value){
+        public void setRealmId(java.lang.String value){
             wrapped.setPropertyValue(REALMID_PROP, value);
         }
         
-        // lastName
-        public Object getLastName() {
-            return wrapped.getPropertyValue(LASTNAME_PROP);
+        // lastName : java.lang.String
+        // writable: true
+        public java.lang.String getLastName() {
+            return (java.lang.String) wrapped.getPropertyValue(LASTNAME_PROP);
         }
 
-        public void setLastName(Object value){
+        public void setLastName(java.lang.String value){
             wrapped.setPropertyValue(LASTNAME_PROP, value);
         }
         
-        // gender
-        public Object getGender() {
-            return wrapped.getPropertyValue(GENDER_PROP);
+        // gender : java.lang.String
+        // writable: true
+        public java.lang.String getGender() {
+            return (java.lang.String) wrapped.getPropertyValue(GENDER_PROP);
         }
 
-        public void setGender(Object value){
+        public void setGender(java.lang.String value){
             wrapped.setPropertyValue(GENDER_PROP, value);
         }
         
-        // parentOrganization
-        public Object getParentOrganization() {
-            return wrapped.getPropertyValue(PARENTORGANIZATION_PROP);
+        // parentOrganization : atg.repository.RepositoryItem
+        // writable: true
+        public  /* [ItemDesc: organization] */ RepositoryItem getParentOrganization() {
+            return ( /* [ItemDesc: organization] */ RepositoryItem) wrapped.getPropertyValue(PARENTORGANIZATION_PROP);
         }
 
-        public void setParentOrganization(Object value){
+        public void setParentOrganization( /* [ItemDesc: organization] */ RepositoryItem value){
             wrapped.setPropertyValue(PARENTORGANIZATION_PROP, value);
         }
         
-        // lastPasswordUpdate
-        public Object getLastPasswordUpdate() {
-            return wrapped.getPropertyValue(LASTPASSWORDUPDATE_PROP);
+        // lastPasswordUpdate : java.sql.Timestamp
+        // writable: true
+        public java.sql.Timestamp getLastPasswordUpdate() {
+            return (java.sql.Timestamp) wrapped.getPropertyValue(LASTPASSWORDUPDATE_PROP);
         }
 
-        public void setLastPasswordUpdate(Object value){
+        public void setLastPasswordUpdate(java.sql.Timestamp value){
             wrapped.setPropertyValue(LASTPASSWORDUPDATE_PROP, value);
         }
         
-        // passwordKeyDerivationFunction
-        public Object getPasswordKeyDerivationFunction() {
-            return wrapped.getPropertyValue(PASSWORDKEYDERIVATIONFUNCTION_PROP);
+        // passwordKeyDerivationFunction : java.lang.String
+        // writable: true
+        public java.lang.String getPasswordKeyDerivationFunction() {
+            return (java.lang.String) wrapped.getPropertyValue(PASSWORDKEYDERIVATIONFUNCTION_PROP);
         }
 
-        public void setPasswordKeyDerivationFunction(Object value){
+        public void setPasswordKeyDerivationFunction(java.lang.String value){
             wrapped.setPropertyValue(PASSWORDKEYDERIVATIONFUNCTION_PROP, value);
         }
         
-        // ancestors
-        public Object getAncestors() {
-            return wrapped.getPropertyValue(ANCESTORS_PROP);
+        // ancestors : java.util.List
+        // writable: true
+        public java.util.List getAncestors() {
+            return (java.util.List) wrapped.getPropertyValue(ANCESTORS_PROP);
         }
 
-        public void setAncestors(Object value){
+        public void setAncestors(java.util.List value){
             wrapped.setPropertyValue(ANCESTORS_PROP, value);
         }
         
-        // receiveEmail
-        public Object getReceiveEmail() {
-            return wrapped.getPropertyValue(RECEIVEEMAIL_PROP);
+        // receiveEmail : java.lang.String
+        // writable: true
+        public java.lang.String getReceiveEmail() {
+            return (java.lang.String) wrapped.getPropertyValue(RECEIVEEMAIL_PROP);
         }
 
-        public void setReceiveEmail(Object value){
+        public void setReceiveEmail(java.lang.String value){
             wrapped.setPropertyValue(RECEIVEEMAIL_PROP, value);
         }
         
-        // registrationDate
-        public Object getRegistrationDate() {
-            return wrapped.getPropertyValue(REGISTRATIONDATE_PROP);
+        // registrationDate : java.sql.Timestamp
+        // writable: true
+        public java.sql.Timestamp getRegistrationDate() {
+            return (java.sql.Timestamp) wrapped.getPropertyValue(REGISTRATIONDATE_PROP);
         }
 
-        public void setRegistrationDate(Object value){
+        public void setRegistrationDate(java.sql.Timestamp value){
             wrapped.setPropertyValue(REGISTRATIONDATE_PROP, value);
         }
         
-        // passwordSalt
-        public Object getPasswordSalt() {
-            return wrapped.getPropertyValue(PASSWORDSALT_PROP);
+        // passwordSalt : java.lang.String
+        // writable: true
+        public java.lang.String getPasswordSalt() {
+            return (java.lang.String) wrapped.getPropertyValue(PASSWORDSALT_PROP);
         }
 
-        public void setPasswordSalt(Object value){
+        public void setPasswordSalt(java.lang.String value){
             wrapped.setPropertyValue(PASSWORDSALT_PROP, value);
         }
         
-        // dateOfBirth
-        public Object getDateOfBirth() {
-            return wrapped.getPropertyValue(DATEOFBIRTH_PROP);
+        // dateOfBirth : java.util.Date
+        // writable: true
+        public java.util.Date getDateOfBirth() {
+            return (java.util.Date) wrapped.getPropertyValue(DATEOFBIRTH_PROP);
         }
 
-        public void setDateOfBirth(Object value){
+        public void setDateOfBirth(java.util.Date value){
             wrapped.setPropertyValue(DATEOFBIRTH_PROP, value);
         }
         
-        // member
-        public Object getMember() {
-            return wrapped.getPropertyValue(MEMBER_PROP);
+        // member : java.lang.Boolean
+        // writable: true
+        public java.lang.Boolean getMember() {
+            return (java.lang.Boolean) wrapped.getPropertyValue(MEMBER_PROP);
         }
 
-        public void setMember(Object value){
+        public void setMember(java.lang.Boolean value){
             wrapped.setPropertyValue(MEMBER_PROP, value);
         }
         
-        // firstName
-        public Object getFirstName() {
-            return wrapped.getPropertyValue(FIRSTNAME_PROP);
+        // firstName : java.lang.String
+        // writable: true
+        public java.lang.String getFirstName() {
+            return (java.lang.String) wrapped.getPropertyValue(FIRSTNAME_PROP);
         }
 
-        public void setFirstName(Object value){
+        public void setFirstName(java.lang.String value){
             wrapped.setPropertyValue(FIRSTNAME_PROP, value);
         }
         
-        // roles
-        public Object getRoles() {
-            return wrapped.getPropertyValue(ROLES_PROP);
+        // roles : java.util.Set
+        // writable: true
+        public java.util.Set getRoles() {
+            return (java.util.Set) wrapped.getPropertyValue(ROLES_PROP);
         }
 
-        public void setRoles(Object value){
+        public void setRoles(java.util.Set value){
             wrapped.setPropertyValue(ROLES_PROP, value);
         }
         
-        // login
-        public Object getLogin() {
-            return wrapped.getPropertyValue(LOGIN_PROP);
+        // login : java.lang.String
+        // writable: true
+        public java.lang.String getLogin() {
+            return (java.lang.String) wrapped.getPropertyValue(LOGIN_PROP);
         }
 
-        public void setLogin(Object value){
+        public void setLogin(java.lang.String value){
             wrapped.setPropertyValue(LOGIN_PROP, value);
         }
         
-        // homeAddress
-        public Object getHomeAddress() {
-            return wrapped.getPropertyValue(HOMEADDRESS_PROP);
+        // homeAddress : atg.repository.RepositoryItem
+        // writable: true
+        public  /* [ItemDesc: contactInfo] */ RepositoryItem getHomeAddress() {
+            return ( /* [ItemDesc: contactInfo] */ RepositoryItem) wrapped.getPropertyValue(HOMEADDRESS_PROP);
         }
 
-        public void setHomeAddress(Object value){
+        public void setHomeAddress( /* [ItemDesc: contactInfo] */ RepositoryItem value){
             wrapped.setPropertyValue(HOMEADDRESS_PROP, value);
         }
         
-        // mailings
-        public Object getMailings() {
-            return wrapped.getPropertyValue(MAILINGS_PROP);
+        // mailings : java.util.Set
+        // writable: false
+        public java.util.Set getMailings() {
+            return (java.util.Set) wrapped.getPropertyValue(MAILINGS_PROP);
         }
 
-        public void setMailings(Object value){
-            wrapped.setPropertyValue(MAILINGS_PROP, value);
-        }
-        
-        // emailStatus
-        public Object getEmailStatus() {
-            return wrapped.getPropertyValue(EMAILSTATUS_PROP);
+        // emailStatus : java.lang.String
+        // writable: true
+        public java.lang.String getEmailStatus() {
+            return (java.lang.String) wrapped.getPropertyValue(EMAILSTATUS_PROP);
         }
 
-        public void setEmailStatus(Object value){
+        public void setEmailStatus(java.lang.String value){
             wrapped.setPropertyValue(EMAILSTATUS_PROP, value);
         }
         
-        // id
-        public Object getId() {
-            return wrapped.getPropertyValue(ID_PROP);
+        // id : java.lang.String
+        // writable: true
+        public java.lang.String getId() {
+            return (java.lang.String) wrapped.getPropertyValue(ID_PROP);
         }
 
-        public void setId(Object value){
+        public void setId(java.lang.String value){
             wrapped.setPropertyValue(ID_PROP, value);
         }
         
-        // lastEmailed
-        public Object getLastEmailed() {
-            return wrapped.getPropertyValue(LASTEMAILED_PROP);
+        // lastEmailed : java.sql.Timestamp
+        // writable: true
+        public java.sql.Timestamp getLastEmailed() {
+            return (java.sql.Timestamp) wrapped.getPropertyValue(LASTEMAILED_PROP);
         }
 
-        public void setLastEmailed(Object value){
+        public void setLastEmailed(java.sql.Timestamp value){
             wrapped.setPropertyValue(LASTEMAILED_PROP, value);
         }
         
-        // autoLogin
-        public Object getAutoLogin() {
-            return wrapped.getPropertyValue(AUTOLOGIN_PROP);
+        // autoLogin : java.lang.Boolean
+        // writable: true
+        public java.lang.Boolean getAutoLogin() {
+            return (java.lang.Boolean) wrapped.getPropertyValue(AUTOLOGIN_PROP);
         }
 
-        public void setAutoLogin(Object value){
+        public void setAutoLogin(java.lang.Boolean value){
             wrapped.setPropertyValue(AUTOLOGIN_PROP, value);
         }
         
-        // locale
-        public Object getLocale() {
-            return wrapped.getPropertyValue(LOCALE_PROP);
+        // locale : java.lang.String
+        // writable: true
+        public java.lang.String getLocale() {
+            return (java.lang.String) wrapped.getPropertyValue(LOCALE_PROP);
         }
 
-        public void setLocale(Object value){
+        public void setLocale(java.lang.String value){
             wrapped.setPropertyValue(LOCALE_PROP, value);
         }
         
-        // userType
-        public Object getUserType() {
-            return wrapped.getPropertyValue(USERTYPE_PROP);
+        // userType : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getUserType() {
+            return (java.lang.Integer) wrapped.getPropertyValue(USERTYPE_PROP);
         }
 
-        public void setUserType(Object value){
+        public void setUserType(java.lang.Integer value){
             wrapped.setPropertyValue(USERTYPE_PROP, value);
         }
         
-        // lastActivity
-        public Object getLastActivity() {
-            return wrapped.getPropertyValue(LASTACTIVITY_PROP);
+        // lastActivity : java.sql.Timestamp
+        // writable: true
+        public java.sql.Timestamp getLastActivity() {
+            return (java.sql.Timestamp) wrapped.getPropertyValue(LASTACTIVITY_PROP);
         }
 
-        public void setLastActivity(Object value){
+        public void setLastActivity(java.sql.Timestamp value){
             wrapped.setPropertyValue(LASTACTIVITY_PROP, value);
         }
         
-        // previousPasswords
-        public Object getPreviousPasswords() {
-            return wrapped.getPropertyValue(PREVIOUSPASSWORDS_PROP);
+        // previousPasswords : [Ljava.lang.String;
+        // writable: true
+        public Object[] getPreviousPasswords() {
+            return (Object[]) wrapped.getPropertyValue(PREVIOUSPASSWORDS_PROP);
         }
 
-        public void setPreviousPasswords(Object value){
+        public void setPreviousPasswords(Object[] value){
             wrapped.setPropertyValue(PREVIOUSPASSWORDS_PROP, value);
         }
         
-        // secondaryOrganizations
-        public Object getSecondaryOrganizations() {
-            return wrapped.getPropertyValue(SECONDARYORGANIZATIONS_PROP);
+        // secondaryOrganizations : java.util.Set
+        // writable: true
+        public java.util.Set getSecondaryOrganizations() {
+            return (java.util.Set) wrapped.getPropertyValue(SECONDARYORGANIZATIONS_PROP);
         }
 
-        public void setSecondaryOrganizations(Object value){
+        public void setSecondaryOrganizations(java.util.Set value){
             wrapped.setPropertyValue(SECONDARYORGANIZATIONS_PROP, value);
         }
         
-        // middleName
-        public Object getMiddleName() {
-            return wrapped.getPropertyValue(MIDDLENAME_PROP);
+        // middleName : java.lang.String
+        // writable: true
+        public java.lang.String getMiddleName() {
+            return (java.lang.String) wrapped.getPropertyValue(MIDDLENAME_PROP);
         }
 
-        public void setMiddleName(Object value){
+        public void setMiddleName(java.lang.String value){
             wrapped.setPropertyValue(MIDDLENAME_PROP, value);
         }
         
-        // generatedPassword
-        public Object getGeneratedPassword() {
-            return wrapped.getPropertyValue(GENERATEDPASSWORD_PROP);
+        // generatedPassword : java.lang.Boolean
+        // writable: true
+        public java.lang.Boolean getGeneratedPassword() {
+            return (java.lang.Boolean) wrapped.getPropertyValue(GENERATEDPASSWORD_PROP);
         }
 
-        public void setGeneratedPassword(Object value){
+        public void setGeneratedPassword(java.lang.Boolean value){
             wrapped.setPropertyValue(GENERATEDPASSWORD_PROP, value);
         }
         
@@ -385,174 +414,193 @@ public class ProfileAdapterRepositoryWrapper {
             wrapped = pRepositoryItem;
         }
 
-        // postalCode
-        public Object getPostalCode() {
-            return wrapped.getPropertyValue(POSTALCODE_PROP);
+        // postalCode : java.lang.String
+        // writable: true
+        public java.lang.String getPostalCode() {
+            return (java.lang.String) wrapped.getPropertyValue(POSTALCODE_PROP);
         }
 
-        public void setPostalCode(Object value){
+        public void setPostalCode(java.lang.String value){
             wrapped.setPropertyValue(POSTALCODE_PROP, value);
         }
         
-        // prefix
-        public Object getPrefix() {
-            return wrapped.getPropertyValue(PREFIX_PROP);
+        // prefix : java.lang.String
+        // writable: true
+        public java.lang.String getPrefix() {
+            return (java.lang.String) wrapped.getPropertyValue(PREFIX_PROP);
         }
 
-        public void setPrefix(Object value){
+        public void setPrefix(java.lang.String value){
             wrapped.setPropertyValue(PREFIX_PROP, value);
         }
         
-        // city
-        public Object getCity() {
-            return wrapped.getPropertyValue(CITY_PROP);
+        // city : java.lang.String
+        // writable: true
+        public java.lang.String getCity() {
+            return (java.lang.String) wrapped.getPropertyValue(CITY_PROP);
         }
 
-        public void setCity(Object value){
+        public void setCity(java.lang.String value){
             wrapped.setPropertyValue(CITY_PROP, value);
         }
         
-        // country
-        public Object getCountry() {
-            return wrapped.getPropertyValue(COUNTRY_PROP);
+        // country : java.lang.String
+        // writable: true
+        public java.lang.String getCountry() {
+            return (java.lang.String) wrapped.getPropertyValue(COUNTRY_PROP);
         }
 
-        public void setCountry(Object value){
+        public void setCountry(java.lang.String value){
             wrapped.setPropertyValue(COUNTRY_PROP, value);
         }
         
-        // phoneNumber
-        public Object getPhoneNumber() {
-            return wrapped.getPropertyValue(PHONENUMBER_PROP);
+        // phoneNumber : java.lang.String
+        // writable: true
+        public java.lang.String getPhoneNumber() {
+            return (java.lang.String) wrapped.getPropertyValue(PHONENUMBER_PROP);
         }
 
-        public void setPhoneNumber(Object value){
+        public void setPhoneNumber(java.lang.String value){
             wrapped.setPropertyValue(PHONENUMBER_PROP, value);
         }
         
-        // lastName
-        public Object getLastName() {
-            return wrapped.getPropertyValue(LASTNAME_PROP);
+        // lastName : java.lang.String
+        // writable: true
+        public java.lang.String getLastName() {
+            return (java.lang.String) wrapped.getPropertyValue(LASTNAME_PROP);
         }
 
-        public void setLastName(Object value){
+        public void setLastName(java.lang.String value){
             wrapped.setPropertyValue(LASTNAME_PROP, value);
         }
         
-        // state
-        public Object getState() {
-            return wrapped.getPropertyValue(STATE_PROP);
+        // state : java.lang.String
+        // writable: true
+        public java.lang.String getState() {
+            return (java.lang.String) wrapped.getPropertyValue(STATE_PROP);
         }
 
-        public void setState(Object value){
+        public void setState(java.lang.String value){
             wrapped.setPropertyValue(STATE_PROP, value);
         }
         
-        // address3
-        public Object getAddress3() {
-            return wrapped.getPropertyValue(ADDRESS3_PROP);
+        // address3 : java.lang.String
+        // writable: true
+        public java.lang.String getAddress3() {
+            return (java.lang.String) wrapped.getPropertyValue(ADDRESS3_PROP);
         }
 
-        public void setAddress3(Object value){
+        public void setAddress3(java.lang.String value){
             wrapped.setPropertyValue(ADDRESS3_PROP, value);
         }
         
-        // address2
-        public Object getAddress2() {
-            return wrapped.getPropertyValue(ADDRESS2_PROP);
+        // address2 : java.lang.String
+        // writable: true
+        public java.lang.String getAddress2() {
+            return (java.lang.String) wrapped.getPropertyValue(ADDRESS2_PROP);
         }
 
-        public void setAddress2(Object value){
+        public void setAddress2(java.lang.String value){
             wrapped.setPropertyValue(ADDRESS2_PROP, value);
         }
         
-        // address1
-        public Object getAddress1() {
-            return wrapped.getPropertyValue(ADDRESS1_PROP);
+        // address1 : java.lang.String
+        // writable: true
+        public java.lang.String getAddress1() {
+            return (java.lang.String) wrapped.getPropertyValue(ADDRESS1_PROP);
         }
 
-        public void setAddress1(Object value){
+        public void setAddress1(java.lang.String value){
             wrapped.setPropertyValue(ADDRESS1_PROP, value);
         }
         
-        // jobTitle
-        public Object getJobTitle() {
-            return wrapped.getPropertyValue(JOBTITLE_PROP);
+        // jobTitle : java.lang.String
+        // writable: true
+        public java.lang.String getJobTitle() {
+            return (java.lang.String) wrapped.getPropertyValue(JOBTITLE_PROP);
         }
 
-        public void setJobTitle(Object value){
+        public void setJobTitle(java.lang.String value){
             wrapped.setPropertyValue(JOBTITLE_PROP, value);
         }
         
-        // ownerId
-        public Object getOwnerId() {
-            return wrapped.getPropertyValue(OWNERID_PROP);
+        // ownerId : java.lang.String
+        // writable: true
+        public java.lang.String getOwnerId() {
+            return (java.lang.String) wrapped.getPropertyValue(OWNERID_PROP);
         }
 
-        public void setOwnerId(Object value){
+        public void setOwnerId(java.lang.String value){
             wrapped.setPropertyValue(OWNERID_PROP, value);
         }
         
-        // firstName
-        public Object getFirstName() {
-            return wrapped.getPropertyValue(FIRSTNAME_PROP);
+        // firstName : java.lang.String
+        // writable: true
+        public java.lang.String getFirstName() {
+            return (java.lang.String) wrapped.getPropertyValue(FIRSTNAME_PROP);
         }
 
-        public void setFirstName(Object value){
+        public void setFirstName(java.lang.String value){
             wrapped.setPropertyValue(FIRSTNAME_PROP, value);
         }
         
-        // faxNumber
-        public Object getFaxNumber() {
-            return wrapped.getPropertyValue(FAXNUMBER_PROP);
+        // faxNumber : java.lang.String
+        // writable: true
+        public java.lang.String getFaxNumber() {
+            return (java.lang.String) wrapped.getPropertyValue(FAXNUMBER_PROP);
         }
 
-        public void setFaxNumber(Object value){
+        public void setFaxNumber(java.lang.String value){
             wrapped.setPropertyValue(FAXNUMBER_PROP, value);
         }
         
-        // companyName
-        public Object getCompanyName() {
-            return wrapped.getPropertyValue(COMPANYNAME_PROP);
+        // companyName : java.lang.String
+        // writable: true
+        public java.lang.String getCompanyName() {
+            return (java.lang.String) wrapped.getPropertyValue(COMPANYNAME_PROP);
         }
 
-        public void setCompanyName(Object value){
+        public void setCompanyName(java.lang.String value){
             wrapped.setPropertyValue(COMPANYNAME_PROP, value);
         }
         
-        // county
-        public Object getCounty() {
-            return wrapped.getPropertyValue(COUNTY_PROP);
+        // county : java.lang.String
+        // writable: true
+        public java.lang.String getCounty() {
+            return (java.lang.String) wrapped.getPropertyValue(COUNTY_PROP);
         }
 
-        public void setCounty(Object value){
+        public void setCounty(java.lang.String value){
             wrapped.setPropertyValue(COUNTY_PROP, value);
         }
         
-        // id
-        public Object getId() {
-            return wrapped.getPropertyValue(ID_PROP);
+        // id : java.lang.String
+        // writable: true
+        public java.lang.String getId() {
+            return (java.lang.String) wrapped.getPropertyValue(ID_PROP);
         }
 
-        public void setId(Object value){
+        public void setId(java.lang.String value){
             wrapped.setPropertyValue(ID_PROP, value);
         }
         
-        // suffix
-        public Object getSuffix() {
-            return wrapped.getPropertyValue(SUFFIX_PROP);
+        // suffix : java.lang.String
+        // writable: true
+        public java.lang.String getSuffix() {
+            return (java.lang.String) wrapped.getPropertyValue(SUFFIX_PROP);
         }
 
-        public void setSuffix(Object value){
+        public void setSuffix(java.lang.String value){
             wrapped.setPropertyValue(SUFFIX_PROP, value);
         }
         
-        // middleName
-        public Object getMiddleName() {
-            return wrapped.getPropertyValue(MIDDLENAME_PROP);
+        // middleName : java.lang.String
+        // writable: true
+        public java.lang.String getMiddleName() {
+            return (java.lang.String) wrapped.getPropertyValue(MIDDLENAME_PROP);
         }
 
-        public void setMiddleName(Object value){
+        public void setMiddleName(java.lang.String value){
             wrapped.setPropertyValue(MIDDLENAME_PROP, value);
         }
         
@@ -604,282 +652,313 @@ public class ProfileAdapterRepositoryWrapper {
             wrapped = pRepositoryItem;
         }
 
-        // params
-        public Object getParams() {
-            return wrapped.getPropertyValue(PARAMS_PROP);
+        // params : [B
+        // writable: true
+        public Object[] getParams() {
+            return (Object[]) wrapped.getPropertyValue(PARAMS_PROP);
         }
 
-        public void setParams(Object value){
+        public void setParams(Object[] value){
             wrapped.setPropertyValue(PARAMS_PROP, value);
         }
         
-        // batchExecId
-        public Object getBatchExecId() {
-            return wrapped.getPropertyValue(BATCHEXECID_PROP);
+        // batchExecId : java.lang.String
+        // writable: true
+        public java.lang.String getBatchExecId() {
+            return (java.lang.String) wrapped.getPropertyValue(BATCHEXECID_PROP);
         }
 
-        public void setBatchExecId(Object value){
+        public void setBatchExecId(java.lang.String value){
             wrapped.setPropertyValue(BATCHEXECID_PROP, value);
         }
         
-        // bcc
-        public Object getBcc() {
-            return wrapped.getPropertyValue(BCC_PROP);
+        // bcc : java.lang.String
+        // writable: true
+        public java.lang.String getBcc() {
+            return (java.lang.String) wrapped.getPropertyValue(BCC_PROP);
         }
 
-        public void setBcc(Object value){
+        public void setBcc(java.lang.String value){
             wrapped.setPropertyValue(BCC_PROP, value);
         }
         
-        // from
-        public Object getFrom() {
-            return wrapped.getPropertyValue(FROM_PROP);
+        // from : java.lang.String
+        // writable: true
+        public java.lang.String getFrom() {
+            return (java.lang.String) wrapped.getPropertyValue(FROM_PROP);
         }
 
-        public void setFrom(Object value){
+        public void setFrom(java.lang.String value){
             wrapped.setPropertyValue(FROM_PROP, value);
         }
         
-        // subject
-        public Object getSubject() {
-            return wrapped.getPropertyValue(SUBJECT_PROP);
+        // subject : java.lang.String
+        // writable: true
+        public java.lang.String getSubject() {
+            return (java.lang.String) wrapped.getPropertyValue(SUBJECT_PROP);
         }
 
-        public void setSubject(Object value){
+        public void setSubject(java.lang.String value){
             wrapped.setPropertyValue(SUBJECT_PROP, value);
         }
         
-        // uniqServerId
-        public Object getUniqServerId() {
-            return wrapped.getPropertyValue(UNIQSERVERID_PROP);
+        // uniqServerId : java.lang.String
+        // writable: true
+        public java.lang.String getUniqServerId() {
+            return (java.lang.String) wrapped.getPropertyValue(UNIQSERVERID_PROP);
         }
 
-        public void setUniqServerId(Object value){
+        public void setUniqServerId(java.lang.String value){
             wrapped.setPropertyValue(UNIQSERVERID_PROP, value);
         }
         
-        // numBounces
-        public Object getNumBounces() {
-            return wrapped.getPropertyValue(NUMBOUNCES_PROP);
+        // numBounces : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getNumBounces() {
+            return (java.lang.Integer) wrapped.getPropertyValue(NUMBOUNCES_PROP);
         }
 
-        public void setNumBounces(Object value){
+        public void setNumBounces(java.lang.Integer value){
             wrapped.setPropertyValue(NUMBOUNCES_PROP, value);
         }
         
-        // startTime
-        public Object getStartTime() {
-            return wrapped.getPropertyValue(STARTTIME_PROP);
+        // startTime : java.sql.Timestamp
+        // writable: true
+        public java.sql.Timestamp getStartTime() {
+            return (java.sql.Timestamp) wrapped.getPropertyValue(STARTTIME_PROP);
         }
 
-        public void setStartTime(Object value){
+        public void setStartTime(java.sql.Timestamp value){
             wrapped.setPropertyValue(STARTTIME_PROP, value);
         }
         
-        // ignoreContactFatigue
-        public Object getIgnoreContactFatigue() {
-            return wrapped.getPropertyValue(IGNORECONTACTFATIGUE_PROP);
+        // ignoreContactFatigue : java.lang.Boolean
+        // writable: true
+        public java.lang.Boolean getIgnoreContactFatigue() {
+            return (java.lang.Boolean) wrapped.getPropertyValue(IGNORECONTACTFATIGUE_PROP);
         }
 
-        public void setIgnoreContactFatigue(Object value){
+        public void setIgnoreContactFatigue(java.lang.Boolean value){
             wrapped.setPropertyValue(IGNORECONTACTFATIGUE_PROP, value);
         }
         
-        // emailAddresses
-        public Object getEmailAddresses() {
-            return wrapped.getPropertyValue(EMAILADDRESSES_PROP);
+        // emailAddresses : java.util.List
+        // writable: true
+        public java.util.List getEmailAddresses() {
+            return (java.util.List) wrapped.getPropertyValue(EMAILADDRESSES_PROP);
         }
 
-        public void setEmailAddresses(Object value){
+        public void setEmailAddresses(java.util.List value){
             wrapped.setPropertyValue(EMAILADDRESSES_PROP, value);
         }
         
-        // siteId
-        public Object getSiteId() {
-            return wrapped.getPropertyValue(SITEID_PROP);
+        // siteId : java.lang.String
+        // writable: true
+        public java.lang.String getSiteId() {
+            return (java.lang.String) wrapped.getPropertyValue(SITEID_PROP);
         }
 
-        public void setSiteId(Object value){
+        public void setSiteId(java.lang.String value){
             wrapped.setPropertyValue(SITEID_PROP, value);
         }
         
-        // recipients
-        public Object getRecipients() {
-            return wrapped.getPropertyValue(RECIPIENTS_PROP);
+        // recipients : java.util.List
+        // writable: true
+        public java.util.List getRecipients() {
+            return (java.util.List) wrapped.getPropertyValue(RECIPIENTS_PROP);
         }
 
-        public void setRecipients(Object value){
+        public void setRecipients(java.util.List value){
             wrapped.setPropertyValue(RECIPIENTS_PROP, value);
         }
         
-        // numSkipped
-        public Object getNumSkipped() {
-            return wrapped.getPropertyValue(NUMSKIPPED_PROP);
+        // numSkipped : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getNumSkipped() {
+            return (java.lang.Integer) wrapped.getPropertyValue(NUMSKIPPED_PROP);
         }
 
-        public void setNumSkipped(Object value){
+        public void setNumSkipped(java.lang.Integer value){
             wrapped.setPropertyValue(NUMSKIPPED_PROP, value);
         }
         
-        // fillFromTemplate
-        public Object getFillFromTemplate() {
-            return wrapped.getPropertyValue(FILLFROMTEMPLATE_PROP);
+        // fillFromTemplate : java.lang.Boolean
+        // writable: true
+        public java.lang.Boolean getFillFromTemplate() {
+            return (java.lang.Boolean) wrapped.getPropertyValue(FILLFROMTEMPLATE_PROP);
         }
 
-        public void setFillFromTemplate(Object value){
+        public void setFillFromTemplate(java.lang.Boolean value){
             wrapped.setPropertyValue(FILLFROMTEMPLATE_PROP, value);
         }
         
-        // cc
-        public Object getCc() {
-            return wrapped.getPropertyValue(CC_PROP);
+        // cc : java.lang.String
+        // writable: true
+        public java.lang.String getCc() {
+            return (java.lang.String) wrapped.getPropertyValue(CC_PROP);
         }
 
-        public void setCc(Object value){
+        public void setCc(java.lang.String value){
             wrapped.setPropertyValue(CC_PROP, value);
         }
         
-        // batchSize
-        public Object getBatchSize() {
-            return wrapped.getPropertyValue(BATCHSIZE_PROP);
+        // batchSize : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getBatchSize() {
+            return (java.lang.Integer) wrapped.getPropertyValue(BATCHSIZE_PROP);
         }
 
-        public void setBatchSize(Object value){
+        public void setBatchSize(java.lang.Integer value){
             wrapped.setPropertyValue(BATCHSIZE_PROP, value);
         }
         
-        // status
-        public Object getStatus() {
-            return wrapped.getPropertyValue(STATUS_PROP);
+        // status : java.lang.String
+        // writable: true
+        public java.lang.String getStatus() {
+            return (java.lang.String) wrapped.getPropertyValue(STATUS_PROP);
         }
 
-        public void setStatus(Object value){
+        public void setStatus(java.lang.String value){
             wrapped.setPropertyValue(STATUS_PROP, value);
         }
         
-        // trackingData
-        public Object getTrackingData() {
-            return wrapped.getPropertyValue(TRACKINGDATA_PROP);
+        // trackingData : java.util.Map
+        // writable: true
+        public java.util.Map getTrackingData() {
+            return (java.util.Map) wrapped.getPropertyValue(TRACKINGDATA_PROP);
         }
 
-        public void setTrackingData(Object value){
+        public void setTrackingData(java.util.Map value){
             wrapped.setPropertyValue(TRACKINGDATA_PROP, value);
         }
         
-        // altTemplate
-        public Object getAltTemplate() {
-            return wrapped.getPropertyValue(ALTTEMPLATE_PROP);
+        // altTemplate : java.lang.String
+        // writable: true
+        public java.lang.String getAltTemplate() {
+            return (java.lang.String) wrapped.getPropertyValue(ALTTEMPLATE_PROP);
         }
 
-        public void setAltTemplate(Object value){
+        public void setAltTemplate(java.lang.String value){
             wrapped.setPropertyValue(ALTTEMPLATE_PROP, value);
         }
         
-        // sendAsText
-        public Object getSendAsText() {
-            return wrapped.getPropertyValue(SENDASTEXT_PROP);
+        // sendAsText : java.lang.String
+        // writable: true
+        public java.lang.String getSendAsText() {
+            return (java.lang.String) wrapped.getPropertyValue(SENDASTEXT_PROP);
         }
 
-        public void setSendAsText(Object value){
+        public void setSendAsText(java.lang.String value){
             wrapped.setPropertyValue(SENDASTEXT_PROP, value);
         }
         
-        // template
-        public Object getTemplate() {
-            return wrapped.getPropertyValue(TEMPLATE_PROP);
+        // template : java.lang.String
+        // writable: true
+        public java.lang.String getTemplate() {
+            return (java.lang.String) wrapped.getPropertyValue(TEMPLATE_PROP);
         }
 
-        public void setTemplate(Object value){
+        public void setTemplate(java.lang.String value){
             wrapped.setPropertyValue(TEMPLATE_PROP, value);
         }
         
-        // id
-        public Object getId() {
-            return wrapped.getPropertyValue(ID_PROP);
+        // id : java.lang.String
+        // writable: true
+        public java.lang.String getId() {
+            return (java.lang.String) wrapped.getPropertyValue(ID_PROP);
         }
 
-        public void setId(Object value){
+        public void setId(java.lang.String value){
             wrapped.setPropertyValue(ID_PROP, value);
         }
         
-        // numSent
-        public Object getNumSent() {
-            return wrapped.getPropertyValue(NUMSENT_PROP);
+        // numSent : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getNumSent() {
+            return (java.lang.Integer) wrapped.getPropertyValue(NUMSENT_PROP);
         }
 
-        public void setNumSent(Object value){
+        public void setNumSent(java.lang.Integer value){
             wrapped.setPropertyValue(NUMSENT_PROP, value);
         }
         
-        // numErrors
-        public Object getNumErrors() {
-            return wrapped.getPropertyValue(NUMERRORS_PROP);
+        // numErrors : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getNumErrors() {
+            return (java.lang.Integer) wrapped.getPropertyValue(NUMERRORS_PROP);
         }
 
-        public void setNumErrors(Object value){
+        public void setNumErrors(java.lang.Integer value){
             wrapped.setPropertyValue(NUMERRORS_PROP, value);
         }
         
-        // batched
-        public Object getBatched() {
-            return wrapped.getPropertyValue(BATCHED_PROP);
+        // batched : java.lang.Boolean
+        // writable: true
+        public java.lang.Boolean getBatched() {
+            return (java.lang.Boolean) wrapped.getPropertyValue(BATCHED_PROP);
         }
 
-        public void setBatched(Object value){
+        public void setBatched(java.lang.Boolean value){
             wrapped.setPropertyValue(BATCHED_PROP, value);
         }
         
-        // endTime
-        public Object getEndTime() {
-            return wrapped.getPropertyValue(ENDTIME_PROP);
+        // endTime : java.sql.Timestamp
+        // writable: true
+        public java.sql.Timestamp getEndTime() {
+            return (java.sql.Timestamp) wrapped.getPropertyValue(ENDTIME_PROP);
         }
 
-        public void setEndTime(Object value){
+        public void setEndTime(java.sql.Timestamp value){
             wrapped.setPropertyValue(ENDTIME_PROP, value);
         }
         
-        // replyto
-        public Object getReplyto() {
-            return wrapped.getPropertyValue(REPLYTO_PROP);
+        // replyto : java.lang.String
+        // writable: true
+        public java.lang.String getReplyto() {
+            return (java.lang.String) wrapped.getPropertyValue(REPLYTO_PROP);
         }
 
-        public void setReplyto(Object value){
+        public void setReplyto(java.lang.String value){
             wrapped.setPropertyValue(REPLYTO_PROP, value);
         }
         
-        // numSoftBounces
-        public Object getNumSoftBounces() {
-            return wrapped.getPropertyValue(NUMSOFTBOUNCES_PROP);
+        // numSoftBounces : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getNumSoftBounces() {
+            return (java.lang.Integer) wrapped.getPropertyValue(NUMSOFTBOUNCES_PROP);
         }
 
-        public void setNumSoftBounces(Object value){
+        public void setNumSoftBounces(java.lang.Integer value){
             wrapped.setPropertyValue(NUMSOFTBOUNCES_PROP, value);
         }
         
-        // numToSend
-        public Object getNumToSend() {
-            return wrapped.getPropertyValue(NUMTOSEND_PROP);
+        // numToSend : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getNumToSend() {
+            return (java.lang.Integer) wrapped.getPropertyValue(NUMTOSEND_PROP);
         }
 
-        public void setNumToSend(Object value){
+        public void setNumToSend(java.lang.Integer value){
             wrapped.setPropertyValue(NUMTOSEND_PROP, value);
         }
         
-        // name
-        public Object getName() {
-            return wrapped.getPropertyValue(NAME_PROP);
+        // name : java.lang.String
+        // writable: true
+        public java.lang.String getName() {
+            return (java.lang.String) wrapped.getPropertyValue(NAME_PROP);
         }
 
-        public void setName(Object value){
+        public void setName(java.lang.String value){
             wrapped.setPropertyValue(NAME_PROP, value);
         }
         
-        // sendAsHtml
-        public Object getSendAsHtml() {
-            return wrapped.getPropertyValue(SENDASHTML_PROP);
+        // sendAsHtml : java.lang.String
+        // writable: true
+        public java.lang.String getSendAsHtml() {
+            return (java.lang.String) wrapped.getPropertyValue(SENDASHTML_PROP);
         }
 
-        public void setSendAsHtml(Object value){
+        public void setSendAsHtml(java.lang.String value){
             wrapped.setPropertyValue(SENDASHTML_PROP, value);
         }
         
@@ -912,111 +991,123 @@ public class ProfileAdapterRepositoryWrapper {
             wrapped = pRepositoryItem;
         }
 
-        // uniqServerId
-        public Object getUniqServerId() {
-            return wrapped.getPropertyValue(UNIQSERVERID_PROP);
+        // uniqServerId : java.lang.String
+        // writable: true
+        public java.lang.String getUniqServerId() {
+            return (java.lang.String) wrapped.getPropertyValue(UNIQSERVERID_PROP);
         }
 
-        public void setUniqServerId(Object value){
+        public void setUniqServerId(java.lang.String value){
             wrapped.setPropertyValue(UNIQSERVERID_PROP, value);
         }
         
-        // numBounces
-        public Object getNumBounces() {
-            return wrapped.getPropertyValue(NUMBOUNCES_PROP);
+        // numBounces : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getNumBounces() {
+            return (java.lang.Integer) wrapped.getPropertyValue(NUMBOUNCES_PROP);
         }
 
-        public void setNumBounces(Object value){
+        public void setNumBounces(java.lang.Integer value){
             wrapped.setPropertyValue(NUMBOUNCES_PROP, value);
         }
         
-        // startTime
-        public Object getStartTime() {
-            return wrapped.getPropertyValue(STARTTIME_PROP);
+        // startTime : java.sql.Timestamp
+        // writable: true
+        public java.sql.Timestamp getStartTime() {
+            return (java.sql.Timestamp) wrapped.getPropertyValue(STARTTIME_PROP);
         }
 
-        public void setStartTime(Object value){
+        public void setStartTime(java.sql.Timestamp value){
             wrapped.setPropertyValue(STARTTIME_PROP, value);
         }
         
-        // numSkipped
-        public Object getNumSkipped() {
-            return wrapped.getPropertyValue(NUMSKIPPED_PROP);
+        // numSkipped : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getNumSkipped() {
+            return (java.lang.Integer) wrapped.getPropertyValue(NUMSKIPPED_PROP);
         }
 
-        public void setNumSkipped(Object value){
+        public void setNumSkipped(java.lang.Integer value){
             wrapped.setPropertyValue(NUMSKIPPED_PROP, value);
         }
         
-        // startIdx
-        public Object getStartIdx() {
-            return wrapped.getPropertyValue(STARTIDX_PROP);
+        // startIdx : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getStartIdx() {
+            return (java.lang.Integer) wrapped.getPropertyValue(STARTIDX_PROP);
         }
 
-        public void setStartIdx(Object value){
+        public void setStartIdx(java.lang.Integer value){
             wrapped.setPropertyValue(STARTIDX_PROP, value);
         }
         
-        // status
-        public Object getStatus() {
-            return wrapped.getPropertyValue(STATUS_PROP);
+        // status : java.lang.String
+        // writable: true
+        public java.lang.String getStatus() {
+            return (java.lang.String) wrapped.getPropertyValue(STATUS_PROP);
         }
 
-        public void setStatus(Object value){
+        public void setStatus(java.lang.String value){
             wrapped.setPropertyValue(STATUS_PROP, value);
         }
         
-        // mailingId
-        public Object getMailingId() {
-            return wrapped.getPropertyValue(MAILINGID_PROP);
+        // mailingId : java.lang.String
+        // writable: true
+        public java.lang.String getMailingId() {
+            return (java.lang.String) wrapped.getPropertyValue(MAILINGID_PROP);
         }
 
-        public void setMailingId(Object value){
+        public void setMailingId(java.lang.String value){
             wrapped.setPropertyValue(MAILINGID_PROP, value);
         }
         
-        // numSent
-        public Object getNumSent() {
-            return wrapped.getPropertyValue(NUMSENT_PROP);
+        // numSent : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getNumSent() {
+            return (java.lang.Integer) wrapped.getPropertyValue(NUMSENT_PROP);
         }
 
-        public void setNumSent(Object value){
+        public void setNumSent(java.lang.Integer value){
             wrapped.setPropertyValue(NUMSENT_PROP, value);
         }
         
-        // numErrors
-        public Object getNumErrors() {
-            return wrapped.getPropertyValue(NUMERRORS_PROP);
+        // numErrors : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getNumErrors() {
+            return (java.lang.Integer) wrapped.getPropertyValue(NUMERRORS_PROP);
         }
 
-        public void setNumErrors(Object value){
+        public void setNumErrors(java.lang.Integer value){
             wrapped.setPropertyValue(NUMERRORS_PROP, value);
         }
         
-        // endTime
-        public Object getEndTime() {
-            return wrapped.getPropertyValue(ENDTIME_PROP);
+        // endTime : java.sql.Timestamp
+        // writable: true
+        public java.sql.Timestamp getEndTime() {
+            return (java.sql.Timestamp) wrapped.getPropertyValue(ENDTIME_PROP);
         }
 
-        public void setEndTime(Object value){
+        public void setEndTime(java.sql.Timestamp value){
             wrapped.setPropertyValue(ENDTIME_PROP, value);
         }
         
-        // summarized
-        public Object getSummarized() {
-            return wrapped.getPropertyValue(SUMMARIZED_PROP);
+        // summarized : java.lang.Boolean
+        // writable: true
+        public java.lang.Boolean getSummarized() {
+            return (java.lang.Boolean) wrapped.getPropertyValue(SUMMARIZED_PROP);
         }
 
-        public void setSummarized(Object value){
+        public void setSummarized(java.lang.Boolean value){
             wrapped.setPropertyValue(SUMMARIZED_PROP, value);
         }
         
-        // numToSend
-        public Object getNumToSend() {
-            return wrapped.getPropertyValue(NUMTOSEND_PROP);
+        // numToSend : java.lang.Integer
+        // writable: true
+        public java.lang.Integer getNumToSend() {
+            return (java.lang.Integer) wrapped.getPropertyValue(NUMTOSEND_PROP);
         }
 
-        public void setNumToSend(Object value){
+        public void setNumToSend(java.lang.Integer value){
             wrapped.setPropertyValue(NUMTOSEND_PROP, value);
         }
         
@@ -1039,21 +1130,23 @@ public class ProfileAdapterRepositoryWrapper {
             wrapped = pRepositoryItem;
         }
 
-        // uniqServerId
-        public Object getUniqServerId() {
-            return wrapped.getPropertyValue(UNIQSERVERID_PROP);
+        // uniqServerId : java.lang.String
+        // writable: true
+        public java.lang.String getUniqServerId() {
+            return (java.lang.String) wrapped.getPropertyValue(UNIQSERVERID_PROP);
         }
 
-        public void setUniqServerId(Object value){
+        public void setUniqServerId(java.lang.String value){
             wrapped.setPropertyValue(UNIQSERVERID_PROP, value);
         }
         
-        // lastUpdated
-        public Object getLastUpdated() {
-            return wrapped.getPropertyValue(LASTUPDATED_PROP);
+        // lastUpdated : java.sql.Timestamp
+        // writable: true
+        public java.sql.Timestamp getLastUpdated() {
+            return (java.sql.Timestamp) wrapped.getPropertyValue(LASTUPDATED_PROP);
         }
 
-        public void setLastUpdated(Object value){
+        public void setLastUpdated(java.sql.Timestamp value){
             wrapped.setPropertyValue(LASTUPDATED_PROP, value);
         }
         
@@ -1080,57 +1173,59 @@ public class ProfileAdapterRepositoryWrapper {
             wrapped = pRepositoryItem;
         }
 
-        // description
-        public Object getDescription() {
-            return wrapped.getPropertyValue(DESCRIPTION_PROP);
+        // description : java.lang.String
+        // writable: true
+        public java.lang.String getDescription() {
+            return (java.lang.String) wrapped.getPropertyValue(DESCRIPTION_PROP);
         }
 
-        public void setDescription(Object value){
+        public void setDescription(java.lang.String value){
             wrapped.setPropertyValue(DESCRIPTION_PROP, value);
         }
         
-        // version
-        public Object getVersion() {
-            return wrapped.getPropertyValue(VERSION_PROP);
+        // version : java.lang.Integer
+        // writable: false
+        public java.lang.Integer getVersion() {
+            return (java.lang.Integer) wrapped.getPropertyValue(VERSION_PROP);
         }
 
-        public void setVersion(Object value){
-            wrapped.setPropertyValue(VERSION_PROP, value);
-        }
-        
-        // id
-        public Object getId() {
-            return wrapped.getPropertyValue(ID_PROP);
+        // id : java.lang.String
+        // writable: true
+        public java.lang.String getId() {
+            return (java.lang.String) wrapped.getPropertyValue(ID_PROP);
         }
 
-        public void setId(Object value){
+        public void setId(java.lang.String value){
             wrapped.setPropertyValue(ID_PROP, value);
         }
         
-        // relativeTo
-        public Object getRelativeTo() {
-            return wrapped.getPropertyValue(RELATIVETO_PROP);
+        // relativeTo : java.lang.String
+        // writable: true
+        public java.lang.String getRelativeTo() {
+            return (java.lang.String) wrapped.getPropertyValue(RELATIVETO_PROP);
         }
 
-        public void setRelativeTo(Object value){
+        public void setRelativeTo(java.lang.String value){
             wrapped.setPropertyValue(RELATIVETO_PROP, value);
         }
         
-        // type
-        public Object getType() {
-            return wrapped.getPropertyValue(TYPE_PROP);
+        // type : java.lang.String
+        // writable: true
+        public java.lang.String getType() {
+            return (java.lang.String) wrapped.getPropertyValue(TYPE_PROP);
         }
 
-        public void setType(Object value){
+        public void setType(java.lang.String value){
             wrapped.setPropertyValue(TYPE_PROP, value);
         }
         
-        // name
-        public Object getName() {
-            return wrapped.getPropertyValue(NAME_PROP);
+        // name : java.lang.String
+        // writable: true
+        public java.lang.String getName() {
+            return (java.lang.String) wrapped.getPropertyValue(NAME_PROP);
         }
 
-        public void setName(Object value){
+        public void setName(java.lang.String value){
             wrapped.setPropertyValue(NAME_PROP, value);
         }
         
@@ -1158,66 +1253,69 @@ public class ProfileAdapterRepositoryWrapper {
             wrapped = pRepositoryItem;
         }
 
-        // description
-        public Object getDescription() {
-            return wrapped.getPropertyValue(DESCRIPTION_PROP);
+        // description : java.lang.String
+        // writable: true
+        public java.lang.String getDescription() {
+            return (java.lang.String) wrapped.getPropertyValue(DESCRIPTION_PROP);
         }
 
-        public void setDescription(Object value){
+        public void setDescription(java.lang.String value){
             wrapped.setPropertyValue(DESCRIPTION_PROP, value);
         }
         
-        // version
-        public Object getVersion() {
-            return wrapped.getPropertyValue(VERSION_PROP);
+        // version : java.lang.Integer
+        // writable: false
+        public java.lang.Integer getVersion() {
+            return (java.lang.Integer) wrapped.getPropertyValue(VERSION_PROP);
         }
 
-        public void setVersion(Object value){
-            wrapped.setPropertyValue(VERSION_PROP, value);
-        }
-        
-        // function
-        public Object getFunction() {
-            return wrapped.getPropertyValue(FUNCTION_PROP);
+        // function : java.lang.String
+        // writable: true
+        public java.lang.String getFunction() {
+            return (java.lang.String) wrapped.getPropertyValue(FUNCTION_PROP);
         }
 
-        public void setFunction(Object value){
+        public void setFunction(java.lang.String value){
             wrapped.setPropertyValue(FUNCTION_PROP, value);
         }
         
-        // id
-        public Object getId() {
-            return wrapped.getPropertyValue(ID_PROP);
+        // id : java.lang.String
+        // writable: true
+        public java.lang.String getId() {
+            return (java.lang.String) wrapped.getPropertyValue(ID_PROP);
         }
 
-        public void setId(Object value){
+        public void setId(java.lang.String value){
             wrapped.setPropertyValue(ID_PROP, value);
         }
         
-        // relativeTo
-        public Object getRelativeTo() {
-            return wrapped.getPropertyValue(RELATIVETO_PROP);
+        // relativeTo : atg.repository.RepositoryItem
+        // writable: true
+        public  /* [ItemDesc: organization] */ RepositoryItem getRelativeTo() {
+            return ( /* [ItemDesc: organization] */ RepositoryItem) wrapped.getPropertyValue(RELATIVETO_PROP);
         }
 
-        public void setRelativeTo(Object value){
+        public void setRelativeTo( /* [ItemDesc: organization] */ RepositoryItem value){
             wrapped.setPropertyValue(RELATIVETO_PROP, value);
         }
         
-        // type
-        public Object getType() {
-            return wrapped.getPropertyValue(TYPE_PROP);
+        // type : java.lang.String
+        // writable: true
+        public java.lang.String getType() {
+            return (java.lang.String) wrapped.getPropertyValue(TYPE_PROP);
         }
 
-        public void setType(Object value){
+        public void setType(java.lang.String value){
             wrapped.setPropertyValue(TYPE_PROP, value);
         }
         
-        // name
-        public Object getName() {
-            return wrapped.getPropertyValue(NAME_PROP);
+        // name : java.lang.String
+        // writable: true
+        public java.lang.String getName() {
+            return (java.lang.String) wrapped.getPropertyValue(NAME_PROP);
         }
 
-        public void setName(Object value){
+        public void setName(java.lang.String value){
             wrapped.setPropertyValue(NAME_PROP, value);
         }
         
@@ -1249,102 +1347,109 @@ public class ProfileAdapterRepositoryWrapper {
             wrapped = pRepositoryItem;
         }
 
-        // relativeRoles
-        public Object getRelativeRoles() {
-            return wrapped.getPropertyValue(RELATIVEROLES_PROP);
+        // relativeRoles : java.util.List
+        // writable: true
+        public java.util.List getRelativeRoles() {
+            return (java.util.List) wrapped.getPropertyValue(RELATIVEROLES_PROP);
         }
 
-        public void setRelativeRoles(Object value){
+        public void setRelativeRoles(java.util.List value){
             wrapped.setPropertyValue(RELATIVEROLES_PROP, value);
         }
         
-        // description
-        public Object getDescription() {
-            return wrapped.getPropertyValue(DESCRIPTION_PROP);
+        // description : java.lang.String
+        // writable: true
+        public java.lang.String getDescription() {
+            return (java.lang.String) wrapped.getPropertyValue(DESCRIPTION_PROP);
         }
 
-        public void setDescription(Object value){
+        public void setDescription(java.lang.String value){
             wrapped.setPropertyValue(DESCRIPTION_PROP, value);
         }
         
-        // ancestorOrganizations
-        public Object getAncestorOrganizations() {
-            return wrapped.getPropertyValue(ANCESTORORGANIZATIONS_PROP);
+        // ancestorOrganizations : java.util.List
+        // writable: true
+        public java.util.List getAncestorOrganizations() {
+            return (java.util.List) wrapped.getPropertyValue(ANCESTORORGANIZATIONS_PROP);
         }
 
-        public void setAncestorOrganizations(Object value){
+        public void setAncestorOrganizations(java.util.List value){
             wrapped.setPropertyValue(ANCESTORORGANIZATIONS_PROP, value);
         }
         
-        // parentOrganization
-        public Object getParentOrganization() {
-            return wrapped.getPropertyValue(PARENTORGANIZATION_PROP);
+        // parentOrganization : atg.repository.RepositoryItem
+        // writable: true
+        public  /* [ItemDesc: organization] */ RepositoryItem getParentOrganization() {
+            return ( /* [ItemDesc: organization] */ RepositoryItem) wrapped.getPropertyValue(PARENTORGANIZATION_PROP);
         }
 
-        public void setParentOrganization(Object value){
+        public void setParentOrganization( /* [ItemDesc: organization] */ RepositoryItem value){
             wrapped.setPropertyValue(PARENTORGANIZATION_PROP, value);
         }
         
-        // roles
-        public Object getRoles() {
-            return wrapped.getPropertyValue(ROLES_PROP);
+        // roles : java.util.Set
+        // writable: true
+        public java.util.Set getRoles() {
+            return (java.util.Set) wrapped.getPropertyValue(ROLES_PROP);
         }
 
-        public void setRoles(Object value){
+        public void setRoles(java.util.Set value){
             wrapped.setPropertyValue(ROLES_PROP, value);
         }
         
-        // childOrganizations
-        public Object getChildOrganizations() {
-            return wrapped.getPropertyValue(CHILDORGANIZATIONS_PROP);
+        // childOrganizations : java.util.Set
+        // writable: true
+        public java.util.Set getChildOrganizations() {
+            return (java.util.Set) wrapped.getPropertyValue(CHILDORGANIZATIONS_PROP);
         }
 
-        public void setChildOrganizations(Object value){
+        public void setChildOrganizations(java.util.Set value){
             wrapped.setPropertyValue(CHILDORGANIZATIONS_PROP, value);
         }
         
-        // secondaryMembers
-        public Object getSecondaryMembers() {
-            return wrapped.getPropertyValue(SECONDARYMEMBERS_PROP);
+        // secondaryMembers : java.util.Set
+        // writable: true
+        public java.util.Set getSecondaryMembers() {
+            return (java.util.Set) wrapped.getPropertyValue(SECONDARYMEMBERS_PROP);
         }
 
-        public void setSecondaryMembers(Object value){
+        public void setSecondaryMembers(java.util.Set value){
             wrapped.setPropertyValue(SECONDARYMEMBERS_PROP, value);
         }
         
-        // allMembers
-        public Object getAllMembers() {
-            return wrapped.getPropertyValue(ALLMEMBERS_PROP);
+        // allMembers : java.util.Set
+        // writable: false
+        public java.util.Set getAllMembers() {
+            return (java.util.Set) wrapped.getPropertyValue(ALLMEMBERS_PROP);
         }
 
-        public void setAllMembers(Object value){
-            wrapped.setPropertyValue(ALLMEMBERS_PROP, value);
-        }
-        
-        // id
-        public Object getId() {
-            return wrapped.getPropertyValue(ID_PROP);
+        // id : java.lang.String
+        // writable: true
+        public java.lang.String getId() {
+            return (java.lang.String) wrapped.getPropertyValue(ID_PROP);
         }
 
-        public void setId(Object value){
+        public void setId(java.lang.String value){
             wrapped.setPropertyValue(ID_PROP, value);
         }
         
-        // members
-        public Object getMembers() {
-            return wrapped.getPropertyValue(MEMBERS_PROP);
+        // members : java.util.Set
+        // writable: true
+        public java.util.Set getMembers() {
+            return (java.util.Set) wrapped.getPropertyValue(MEMBERS_PROP);
         }
 
-        public void setMembers(Object value){
+        public void setMembers(java.util.Set value){
             wrapped.setPropertyValue(MEMBERS_PROP, value);
         }
         
-        // name
-        public Object getName() {
-            return wrapped.getPropertyValue(NAME_PROP);
+        // name : java.lang.String
+        // writable: true
+        public java.lang.String getName() {
+            return (java.lang.String) wrapped.getPropertyValue(NAME_PROP);
         }
 
-        public void setName(Object value){
+        public void setName(java.lang.String value){
             wrapped.setPropertyValue(NAME_PROP, value);
         }
         
@@ -1372,66 +1477,73 @@ public class ProfileAdapterRepositoryWrapper {
             wrapped = pRepositoryItem;
         }
 
-        // description
-        public Object getDescription() {
-            return wrapped.getPropertyValue(DESCRIPTION_PROP);
+        // description : java.lang.String
+        // writable: true
+        public java.lang.String getDescription() {
+            return (java.lang.String) wrapped.getPropertyValue(DESCRIPTION_PROP);
         }
 
-        public void setDescription(Object value){
+        public void setDescription(java.lang.String value){
             wrapped.setPropertyValue(DESCRIPTION_PROP, value);
         }
         
-        // childFolders
-        public Object getChildFolders() {
-            return wrapped.getPropertyValue(CHILDFOLDERS_PROP);
+        // childFolders : java.util.Set
+        // writable: true
+        public java.util.Set getChildFolders() {
+            return (java.util.Set) wrapped.getPropertyValue(CHILDFOLDERS_PROP);
         }
 
-        public void setChildFolders(Object value){
+        public void setChildFolders(java.util.Set value){
             wrapped.setPropertyValue(CHILDFOLDERS_PROP, value);
         }
         
-        // childItems
-        public Object getChildItems() {
-            return wrapped.getPropertyValue(CHILDITEMS_PROP);
+        // childItems : java.lang.String
+        // writable: true
+        public java.lang.String getChildItems() {
+            return (java.lang.String) wrapped.getPropertyValue(CHILDITEMS_PROP);
         }
 
-        public void setChildItems(Object value){
+        public void setChildItems(java.lang.String value){
             wrapped.setPropertyValue(CHILDITEMS_PROP, value);
         }
         
-        // parent
-        public Object getParent() {
-            return wrapped.getPropertyValue(PARENT_PROP);
+        // parent : atg.repository.RepositoryItem
+        // writable: true
+        public  /* [ItemDesc: genericFolder] */ RepositoryItem getParent() {
+            return ( /* [ItemDesc: genericFolder] */ RepositoryItem) wrapped.getPropertyValue(PARENT_PROP);
         }
 
-        public void setParent(Object value){
+        public void setParent( /* [ItemDesc: genericFolder] */ RepositoryItem value){
             wrapped.setPropertyValue(PARENT_PROP, value);
         }
         
-        // id
-        public Object getId() {
-            return wrapped.getPropertyValue(ID_PROP);
+        // id : java.lang.String
+        // writable: true
+        public java.lang.String getId() {
+            return (java.lang.String) wrapped.getPropertyValue(ID_PROP);
         }
 
-        public void setId(Object value){
+        public void setId(java.lang.String value){
             wrapped.setPropertyValue(ID_PROP, value);
         }
         
-        // type
-        public Object getType() {
-            return wrapped.getPropertyValue(TYPE_PROP);
+        // type : java.lang.String
+        // writable: true
+        public java.lang.String getType() {
+            return (java.lang.String) wrapped.getPropertyValue(TYPE_PROP);
         }
 
-        public void setType(Object value){
+        public void setType(java.lang.String value){
             wrapped.setPropertyValue(TYPE_PROP, value);
         }
         
-        // name
-        public Object getName() {
-            return wrapped.getPropertyValue(NAME_PROP);
+        // name : java.lang.String
+        // writable: true
+        public java.lang.String getName() {
+            return (java.lang.String) wrapped.getPropertyValue(NAME_PROP);
         }
 
-        public void setName(Object value){
+        public void setName(java.lang.String value){
             wrapped.setPropertyValue(NAME_PROP, value);
         }
         
@@ -1459,66 +1571,73 @@ public class ProfileAdapterRepositoryWrapper {
             wrapped = pRepositoryItem;
         }
 
-        // description
-        public Object getDescription() {
-            return wrapped.getPropertyValue(DESCRIPTION_PROP);
+        // description : java.lang.String
+        // writable: true
+        public java.lang.String getDescription() {
+            return (java.lang.String) wrapped.getPropertyValue(DESCRIPTION_PROP);
         }
 
-        public void setDescription(Object value){
+        public void setDescription(java.lang.String value){
             wrapped.setPropertyValue(DESCRIPTION_PROP, value);
         }
         
-        // childFolders
-        public Object getChildFolders() {
-            return wrapped.getPropertyValue(CHILDFOLDERS_PROP);
+        // childFolders : java.util.Set
+        // writable: true
+        public java.util.Set getChildFolders() {
+            return (java.util.Set) wrapped.getPropertyValue(CHILDFOLDERS_PROP);
         }
 
-        public void setChildFolders(Object value){
+        public void setChildFolders(java.util.Set value){
             wrapped.setPropertyValue(CHILDFOLDERS_PROP, value);
         }
         
-        // childItems
-        public Object getChildItems() {
-            return wrapped.getPropertyValue(CHILDITEMS_PROP);
+        // childItems : java.util.Set
+        // writable: true
+        public java.util.Set getChildItems() {
+            return (java.util.Set) wrapped.getPropertyValue(CHILDITEMS_PROP);
         }
 
-        public void setChildItems(Object value){
+        public void setChildItems(java.util.Set value){
             wrapped.setPropertyValue(CHILDITEMS_PROP, value);
         }
         
-        // parent
-        public Object getParent() {
-            return wrapped.getPropertyValue(PARENT_PROP);
+        // parent : atg.repository.RepositoryItem
+        // writable: true
+        public  /* [ItemDesc: genericFolder] */ RepositoryItem getParent() {
+            return ( /* [ItemDesc: genericFolder] */ RepositoryItem) wrapped.getPropertyValue(PARENT_PROP);
         }
 
-        public void setParent(Object value){
+        public void setParent( /* [ItemDesc: genericFolder] */ RepositoryItem value){
             wrapped.setPropertyValue(PARENT_PROP, value);
         }
         
-        // id
-        public Object getId() {
-            return wrapped.getPropertyValue(ID_PROP);
+        // id : java.lang.String
+        // writable: true
+        public java.lang.String getId() {
+            return (java.lang.String) wrapped.getPropertyValue(ID_PROP);
         }
 
-        public void setId(Object value){
+        public void setId(java.lang.String value){
             wrapped.setPropertyValue(ID_PROP, value);
         }
         
-        // type
-        public Object getType() {
-            return wrapped.getPropertyValue(TYPE_PROP);
+        // type : java.lang.String
+        // writable: true
+        public java.lang.String getType() {
+            return (java.lang.String) wrapped.getPropertyValue(TYPE_PROP);
         }
 
-        public void setType(Object value){
+        public void setType(java.lang.String value){
             wrapped.setPropertyValue(TYPE_PROP, value);
         }
         
-        // name
-        public Object getName() {
-            return wrapped.getPropertyValue(NAME_PROP);
+        // name : java.lang.String
+        // writable: true
+        public java.lang.String getName() {
+            return (java.lang.String) wrapped.getPropertyValue(NAME_PROP);
         }
 
-        public void setName(Object value){
+        public void setName(java.lang.String value){
             wrapped.setPropertyValue(NAME_PROP, value);
         }
         
@@ -1542,30 +1661,33 @@ public class ProfileAdapterRepositoryWrapper {
             wrapped = pRepositoryItem;
         }
 
-        // description
-        public Object getDescription() {
-            return wrapped.getPropertyValue(DESCRIPTION_PROP);
+        // description : java.lang.String
+        // writable: true
+        public java.lang.String getDescription() {
+            return (java.lang.String) wrapped.getPropertyValue(DESCRIPTION_PROP);
         }
 
-        public void setDescription(Object value){
+        public void setDescription(java.lang.String value){
             wrapped.setPropertyValue(DESCRIPTION_PROP, value);
         }
         
-        // id
-        public Object getId() {
-            return wrapped.getPropertyValue(ID_PROP);
+        // id : java.lang.String
+        // writable: true
+        public java.lang.String getId() {
+            return (java.lang.String) wrapped.getPropertyValue(ID_PROP);
         }
 
-        public void setId(Object value){
+        public void setId(java.lang.String value){
             wrapped.setPropertyValue(ID_PROP, value);
         }
         
-        // name
-        public Object getName() {
-            return wrapped.getPropertyValue(NAME_PROP);
+        // name : java.lang.String
+        // writable: true
+        public java.lang.String getName() {
+            return (java.lang.String) wrapped.getPropertyValue(NAME_PROP);
         }
 
-        public void setName(Object value){
+        public void setName(java.lang.String value){
             wrapped.setPropertyValue(NAME_PROP, value);
         }
         

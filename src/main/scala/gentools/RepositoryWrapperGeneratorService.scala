@@ -1,11 +1,12 @@
 package gentools
 
 import java.io.{File, PrintWriter}
-import java.nio.file.Path
+import java.nio.file.{Path, Paths}
 import java.util
 
 import atg.adapter.gsa.GSARepository
 import atg.nucleus.GenericService
+import atg.repository.MutableRepository
 
 import scala.beans.BeanProperty
 import scala.collection.JavaConverters._
@@ -14,9 +15,6 @@ import scala.collection.JavaConverters._
   * @author Sergei Dianov
   */
 class RepositoryWrapperGeneratorService extends GenericService {
-
-  def resolveComponent(name: String): Option[AnyRef] = Option(getNucleus.resolveName(name));
-
 
   @BeanProperty
   var repositoriesToGenerate: java.util.List[String] = _
@@ -28,13 +26,18 @@ class RepositoryWrapperGeneratorService extends GenericService {
 
     logInfo("starting...")
 
-    val repositoryStrings = Option(repositoriesToGenerate).getOrElse(
-      sys.error(" repositoriesToGenerate must be set")).asScala
+    val repositoryStrings: List[String] = Option(repositoriesToGenerate).getOrElse(
+      sys.error(" repositoriesToGenerate must be set")).asScala.toList
 
-    val components = repositoryStrings.flatMap(resolveComponent).collect {
-      case a: GSARepository => a;
+    val pairs = repositoryStrings.map(x => x -> getNucleus.resolveName(x));
+
+    val filtered = pairs.collect{
+      case (a, b: MutableRepository) => (a,b);
     }
 
+    val gen = new RepositoryWrapperGenerator(filtered.toMap);
+
+    gen.writeFiles(Paths.get(exportPath));
 
 
   }

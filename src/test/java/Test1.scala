@@ -16,20 +16,25 @@ object Test1 extends App {
 
   val mLogger = Logger.getLogger(classOf[Nothing])
 
+  val exportPath = Paths.get("f:/Work/Diez/GenTools/src/test/java");
+  val paths = List("/atg/userprofiling/ProfileAdapterRepository", "/atg/dynamo/service/jdbc/SDSRepository");
+
   mLogger.log(Level.INFO, "Start Nucleus.")
 
   System.setProperty("derby.locks.deadlockTrace", "true")
 
   val mNucleus = NucleusTestUtils.startNucleusWithModules(Array[String]("DPS"), classOf[Nothing], classOf[Nothing].getName, "/atg/userprofiling/ProfileAdapterRepository")
 
-  val path = "/atg/userprofiling/ProfileAdapterRepository";
-  val profile = mNucleus.resolveName(path).asInstanceOf[MutableRepository]
+  val pairs = paths.map(x => x -> mNucleus.resolveName(x));
 
-  val outPath = Paths.get("f:/Work/Diez/GenTools/src/test/java");
+     val filtered = pairs.collect{
+       case (a, b: MutableRepository) => (a,b);
+     }
 
-  val gen = new RepositoryWrapperGenerator(Map(path -> profile));
+     val gen = new RepositoryWrapperGenerator(filtered.toMap);
 
-  gen.writeFiles(outPath)
+
+  gen.writeFiles(exportPath)
 
   Thread.sleep(500)
 

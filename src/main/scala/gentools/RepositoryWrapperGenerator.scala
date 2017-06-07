@@ -3,9 +3,10 @@ package gentools
 import java.io.{File, PrintWriter}
 import java.nio.file.{Path, Paths}
 
-import atg.adapter.gsa.GSARepository
+import atg.adapter.gsa.{GSAPropertyDescriptor, GSARepository}
+import atg.beans.DynamicPropertyDescriptor
 import atg.nucleus.GenericService
-import atg.repository.{MutableRepository, RepositoryItemDescriptor}
+import atg.repository.{MutableRepository, RepositoryItem, RepositoryItemDescriptor}
 
 import scala.collection.JavaConverters._
 
@@ -49,19 +50,50 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
       s"""        public static final String ${propToConstName(prop)}="$prop";"""
     }.mkString("\n")
 
-    def properties(descriptor: RepositoryItemDescriptor) = descriptor.getPropertyNames.map { prop =>
+    def typeMap(propertyDescriptor: DynamicPropertyDescriptor): String = {
+      val ptype = propertyDescriptor.getPropertyType
+
+      if (ptype.isArray) {
+        return "Object[]"; // TODO
+      }
+
+      if(ptype.equals(classOf[RepositoryItem])) {
+        val ctype = propertyDescriptor.asInstanceOf[GSAPropertyDescriptor].getPropertyItemDescriptor
+
+        return s" /* $ctype */ RepositoryItem"
+      }
+
+      return ptype.getName
+    }
+
+
+    def properties(descriptor: RepositoryItemDescriptor): String = descriptor.getPropertyNames.map { prop =>
+
+      val propertyDescriptor: DynamicPropertyDescriptor = descriptor.getPropertyDescriptor(prop);
+
+      val ptype = typeMap(propertyDescriptor)
+
       val getterName = "get" + prop.capitalize;
       val setterName = "set" + prop.capitalize;
 
-      s"""        // ${prop}
-          |        public Object ${getterName}() {
-          |            return wrapped.getPropertyValue(${propToConstName(prop)});
-          |        }
-          |
-          |        public void ${setterName}(Object value){
-          |            wrapped.setPropertyValue(${propToConstName(prop)}, value);
-          |        }
+      val getter: String =
+        s"""        // ${prop} : ${propertyDescriptor.getPropertyType.getName}
+           |        // writable: ${propertyDescriptor.isWritable}
+           |        public ${ptype} ${getterName}() {
+           |            return (${ptype}) wrapped.getPropertyValue(${propToConstName(prop)});
+           |        }
+           |""".stripMargin
+
+      val setter: String = if (propertyDescriptor.isWritable) {
+        s"""
+           |        public void ${setterName}(${ptype} value){
+           |            wrapped.setPropertyValue(${propToConstName(prop)}, value);
+           |        }
         """.stripMargin
+      }
+      else "";
+
+      getter + setter
     }.mkString("\n")
 
     val itemClasses = itemDescriptors.map { desc =>
@@ -71,23 +103,23 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
       val propLines = properties(desc);
 
       s"""    // $name
-          |    public static class $className {
-          |
-          |${propConsts(desc)}
-          |
-          |        private MutableRepositoryItem wrapped;
-          |
-          |        public MutableRepositoryItem getWrapped() {
-          |            return wrapped;
-          |        }
-          |
-          |        public $className(final MutableRepositoryItem pRepositoryItem) {
-          |            wrapped = pRepositoryItem;
-          |        }
-          |
-          |$propLines
-          |
-          |    }
+         |    public static class $className {
+         |
+         |${propConsts(desc)}
+         |
+         |        private MutableRepositoryItem wrapped;
+         |
+         |        public MutableRepositoryItem getWrapped() {
+         |            return wrapped;
+         |        }
+         |
+         |        public $className(final MutableRepositoryItem pRepositoryItem) {
+         |            wrapped = pRepositoryItem;
+         |        }
+         |
+         |$propLines
+         |
+         |    }
       """.stripMargin
     }.mkString("\n")
 
@@ -95,6 +127,7 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
        |
        |import atg.adapter.gsa.GSARepository;
        |import atg.repository.MutableRepositoryItem;
+       |import atg.repository.RepositoryItem;
        |
        |public class $className {
        |
