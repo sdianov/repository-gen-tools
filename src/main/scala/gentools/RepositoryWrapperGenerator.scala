@@ -6,7 +6,7 @@ import java.nio.file.{Path, Paths}
 import atg.adapter.gsa.{GSAPropertyDescriptor, GSARepository}
 import atg.beans.DynamicPropertyDescriptor
 import atg.nucleus.GenericService
-import atg.repository.{MutableRepository, RepositoryItem, RepositoryItemDescriptor}
+import atg.repository.{MutableRepository, RepositoryItem, RepositoryItemDescriptor, RepositoryView}
 
 import scala.collection.JavaConverters._
 
@@ -33,8 +33,10 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
       val descriptorNames = repo._2.getItemDescriptorNames.toList;
       val descriptors = descriptorNames.map(x => repo._2.getItemDescriptor(x))
 
+      val viewNames = repo._2.getViewNames.toList
+      val views = viewNames.map(x => repo._2.getView(x))
 
-      val content = fileContent(packageName, className, descriptors)
+      val content = fileContent(packageName, className, descriptors, views)
       pw.println(content);
       pw.close();
     }
@@ -42,12 +44,12 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
   }
 
 
-  def fileContent(packageName: String, className: String, itemDescriptors: List[RepositoryItemDescriptor]) = {
+  def fileContent(packageName: String, className: String, itemDescriptors: List[RepositoryItemDescriptor], views: List[RepositoryView]) = {
 
     def propToConstName(propName: String) = s"""${propName.toUpperCase}_PROP"""
 
     def propConsts(descriptor: RepositoryItemDescriptor) = descriptor.getPropertyNames.map { prop =>
-      s"""        public static final String ${propToConstName(prop)}="$prop";"""
+      s"""        public static final String ${propToConstName(prop)} = "$prop";"""
     }.mkString("\n")
 
     def typeMap(propertyDescriptor: DynamicPropertyDescriptor): String = {
@@ -57,7 +59,7 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
         return "Object[]"; // TODO
       }
 
-      if(ptype.equals(classOf[RepositoryItem])) {
+      if (ptype.equals(classOf[RepositoryItem])) {
         val ctype = propertyDescriptor.asInstanceOf[GSAPropertyDescriptor].getPropertyItemDescriptor
 
         return s" /* $ctype */ RepositoryItem"
@@ -96,6 +98,12 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
       getter + setter
     }.mkString("\n")
 
+    def descToConstName(descriptor: RepositoryItemDescriptor) = s"""${descriptor.getItemDescriptorName.toUpperCase}_DESC"""
+
+    def itemConsts(): String = itemDescriptors.map { desc =>
+      s"""    public static final String ${descToConstName(desc)} = "${desc.getItemDescriptorName}";"""
+    }.mkString("\n")
+
     val itemClasses = itemDescriptors.map { desc =>
       val name = desc.getItemDescriptorName;
       val className = name.capitalize + "Item";
@@ -103,15 +111,9 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
       val propLines = properties(desc);
 
       s"""    // $name
-         |    public static class $className {
+         |    public static class $className extends RepositoryItemImpl {
          |
          |${propConsts(desc)}
-         |
-         |        private MutableRepositoryItem wrapped;
-         |
-         |        public MutableRepositoryItem getWrapped() {
-         |            return wrapped;
-         |        }
          |
          |        public $className(final MutableRepositoryItem pRepositoryItem) {
          |            wrapped = pRepositoryItem;
@@ -120,14 +122,166 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
          |$propLines
          |
          |    }
+         |
+         |    public $className get${className}(final String itemId) throws RepositoryException {
+         |        validateNonBlank(itemId, "get${className}: Item ID cannot be empty");
+         |        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, ${descToConstName(desc)});
+         |        return new $className(item);
+         |    }
       """.stripMargin
+    }.mkString("\n")
+
+    def viewToConst(view: RepositoryView) = s"""${view.getViewName.toUpperCase}_VIEW"""
+
+    val viewClasses = views.map { view =>
+      val className = s"""${view.getViewName.capitalize}View""";
+
+      s"""
+         |    // VIEW : ${view.getViewName}
+         |    public static final String ${viewToConst(view)} = "${view.getViewName}";
+         |
+         |    public static class $className extends RepositoryViewImpl {
+         |
+         |        public $className(RepositoryView pRepositoryView) {
+         |            wrapped = pRepositoryView;
+         |        }
+         |    }
+         |
+         |    public $className get${className}() throws RepositoryException {
+         |        final RepositoryView view = wrapped.getView(${viewToConst(view)});
+         |        return new $className(view);
+         |    }
+         |
+       """.stripMargin
     }.mkString("\n")
 
     s"""package $packageName;
        |
        |import atg.adapter.gsa.GSARepository;
        |import atg.repository.MutableRepositoryItem;
+       |import atg.repository.Query;
+       |import atg.repository.QueryBuilder;
+       |import atg.repository.QueryOptions;
+       |import atg.repository.Repository;
+       |import atg.repository.RepositoryException;
        |import atg.repository.RepositoryItem;
+       |import atg.repository.RepositoryItemDescriptor;
+       |import atg.repository.RepositoryView;
+       |import atg.repository.SortDirectives;
+       |
+       |import java.util.Collection;
+       |
+       |abstract class RepositoryItemImpl implements MutableRepositoryItem {
+       |
+       |    protected MutableRepositoryItem wrapped;
+       |
+       |    public MutableRepositoryItem getWrapped() {
+       |        return wrapped;
+       |    }
+       |
+       |    @Override
+       |    public void setPropertyValue(String pS, Object pO) {
+       |        wrapped.setPropertyValue(pS, pO);
+       |    }
+       |
+       |    @Override
+       |    public String getRepositoryId() {
+       |        return wrapped.getRepositoryId();
+       |    }
+       |
+       |    @Override
+       |    public Object getPropertyValue(String pS) {
+       |        return wrapped.getPropertyValue(pS);
+       |    }
+       |
+       |    @Override
+       |    public Repository getRepository() {
+       |        return wrapped.getRepository();
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItemDescriptor getItemDescriptor() throws RepositoryException {
+       |        return wrapped.getItemDescriptor();
+       |    }
+       |
+       |    @Override
+       |    public boolean isTransient() {
+       |        return wrapped.isTransient();
+       |    }
+       |
+       |    @Override
+       |    public Collection<String> getContextMemberships() throws RepositoryException {
+       |        return wrapped.getContextMemberships();
+       |    }
+       |
+       |    @Override
+       |    public String getItemDisplayName() {
+       |        return wrapped.getItemDisplayName();
+       |    }
+       |
+       |}
+       |
+       |abstract class RepositoryViewImpl implements RepositoryView {
+       |
+       |    protected RepositoryView wrapped;
+       |
+       |    @Override
+       |    public String getViewName() {
+       |        return wrapped.getViewName();
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItemDescriptor getItemDescriptor() throws RepositoryException {
+       |        return wrapped.getItemDescriptor();
+       |    }
+       |
+       |    @Override
+       |    public QueryBuilder getQueryBuilder() {
+       |        return wrapped.getQueryBuilder();
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItem[] executeQuery(Query pQuery) throws RepositoryException {
+       |        return wrapped.executeQuery(pQuery);
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItem[] executeQuery(Query pQuery, SortDirectives pSortDirectives) throws RepositoryException {
+       |        return wrapped.executeQuery(pQuery, pSortDirectives);
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItem[] executeQuery(Query pQuery, int pI) throws RepositoryException {
+       |        return wrapped.executeQuery(pQuery, pI);
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItem[] executeQuery(Query pQuery, int pI, SortDirectives pSortDirectives) throws RepositoryException {
+       |        return wrapped.executeQuery(pQuery, pI, pSortDirectives);
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItem[] executeQuery(Query pQuery, int pI, int pI1) throws RepositoryException {
+       |        return wrapped.executeQuery(pQuery, pI, pI1);
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItem[] executeQuery(Query pQuery, int pI, int pI1, SortDirectives pSortDirectives)
+       |            throws RepositoryException {
+       |        return wrapped.executeQuery(pQuery, pI, pI1, pSortDirectives);
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItem[] executeQuery(Query pQuery, QueryOptions pQueryOptions) throws RepositoryException {
+       |        return wrapped.executeQuery(pQuery, pQueryOptions);
+       |    }
+       |
+       |    @Override
+       |    public int executeCountQuery(Query pQuery) throws RepositoryException {
+       |        return wrapped.executeCountQuery(pQuery);
+       |    }
+       |}
+       |
        |
        |public class $className {
        |
@@ -141,8 +295,18 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
        |        return new $className(pRepository);
        |    }
        |
+       |    // Utilily methods
+       |    private void validateNonBlank(final String pString, final String pMessage) {
+       |        if (pString == null || pString.length() == 0 || pString.trim().length() == 0) {
+       |            throw new IllegalArgumentException(pMessage);
+       |        }
+       |    }
+       |
+       |${itemConsts()}
+       |
        |$itemClasses
        |
+       |$viewClasses
        |}
       """.stripMargin
   }

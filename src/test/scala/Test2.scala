@@ -39,6 +39,4 @@ object Test2 extends App {
 
   if (mNucleus != null)
     NucleusTestUtils.shutdownNucleus(mNucleus)
-
-
 }
