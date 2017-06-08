@@ -21,7 +21,7 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
   def writeFiles(exportPath: Path): Unit = {
 
     val result = repositories.map { repo =>
-
+      println(s"Writting component: ${repo._1}");
       val component = repo._2.asInstanceOf[GenericService];
 
       val packageName = repo._1.split("/").drop(1).dropRight(1).mkString(".");
@@ -165,6 +165,9 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
 
       val className = s"""${validIdent(view.getViewName.capitalize)}View""";
 
+      val desc = view.getItemDescriptor;
+      val descClassName = validIdent(desc.getItemDescriptorName.capitalize) + "Item";
+
       s"""
          |    // VIEW : ${view.getViewName}
          |    public static final String ${viewToConst(view)} = "${view.getViewName}";
@@ -174,6 +177,14 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
          |        public $className(RepositoryView pRepositoryView) {
          |            wrapped = pRepositoryView;
          |        }
+         |
+         |        public List<${descClassName}> executeTypedQuery(Query pQuery) throws RepositoryException {
+         |            RepositoryItem[] result = wrapped.executeQuery(pQuery);
+         |            if (result == null)
+         |                return Collections.emptyList();
+         |            return Arrays.stream(result).map(x -> new ${descClassName}((MutableRepositoryItem) x)).collect(Collectors.toList());
+         |        }
+         |
          |    }
          |
          |    public $className get${className}() throws RepositoryException {
@@ -198,7 +209,11 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
        |import atg.repository.RepositoryView;
        |import atg.repository.SortDirectives;
        |
+       |import java.util.Arrays;
        |import java.util.Collection;
+       |import java.util.Collections;
+       |import java.util.List;
+       |import java.util.stream.Collectors;
        |
        |abstract class RepositoryItemImpl implements MutableRepositoryItem {
        |
