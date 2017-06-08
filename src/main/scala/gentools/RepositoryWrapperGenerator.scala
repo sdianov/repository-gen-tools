@@ -16,17 +16,22 @@ import scala.collection.JavaConverters._
 
 class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
 
+  def validIdent(s : String) = s.replace("-", "_").replace(" ", "_")
+
   def writeFiles(exportPath: Path): Unit = {
 
     val result = repositories.map { repo =>
 
-      val outFile = new java.io.File(Paths.get(exportPath.toString, repo._1 + "Wrapper.java").toString);
-      outFile.getParentFile.mkdirs();
-
       val component = repo._2.asInstanceOf[GenericService];
 
       val packageName = repo._1.split("/").drop(1).dropRight(1).mkString(".");
-      val className = component.getName + "Wrapper";
+      val className = repo._1.split("/").last + "Wrapper";
+      val packagePath = repo._1.split("/").drop(1).dropRight(1).mkString("/");
+
+      val outFile = new java.io.File(Paths.get(exportPath.toString, packagePath, className + ".java").toString);
+      outFile.getParentFile.mkdirs();
+
+
 
       val pw = new PrintWriter(outFile)
 
@@ -44,9 +49,9 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
   }
 
 
-  def fileContent(packageName: String, className: String, itemDescriptors: List[RepositoryItemDescriptor], views: List[RepositoryView]) = {
+  def fileContent(packageName: String, wrapperClassName: String, itemDescriptors: List[RepositoryItemDescriptor], views: List[RepositoryView]) = {
 
-    def propToConstName(propName: String) = s"""${propName.toUpperCase}_PROP"""
+    def propToConstName(propName: String) = s"""${validIdent(propName.toUpperCase)}_PROP"""
 
     def propConsts(descriptor: RepositoryItemDescriptor) = descriptor.getPropertyNames.map { prop =>
       s"""        public static final String ${propToConstName(prop)} = "$prop";"""
@@ -56,13 +61,37 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
       val ptype = propertyDescriptor.getPropertyType
 
       if (ptype.isArray) {
-        return "Object[]"; // TODO
+        val compType = ptype.getComponentType;
+        return s"${compType.getName}[]"; // TODO
       }
 
       if (ptype.equals(classOf[RepositoryItem])) {
-        val ctype = propertyDescriptor.asInstanceOf[GSAPropertyDescriptor].getPropertyItemDescriptor
 
+        val ctype = propertyDescriptor match {
+          case gsa : GSAPropertyDescriptor => gsa.getPropertyItemDescriptor.getItemDescriptorName
+          case x => x.getName
+        }
         return s" /* $ctype */ RepositoryItem"
+      }
+
+      if (ptype.isAssignableFrom(classOf[java.util.List[_]])) {
+        val compType = propertyDescriptor.getComponentPropertyType;
+        return s"java.util.List<${compType.getName}>"
+      }
+
+      if (ptype.isAssignableFrom(classOf[java.util.Set[_]])) {
+        val compType = propertyDescriptor.getComponentPropertyType;
+        return s"java.util.Set<${compType.getName}>"
+      }
+
+      if (ptype.isAssignableFrom(classOf[java.util.Map[_,_]])) {
+        return s"java.util.Map<?,?>"
+      }
+
+      val packaje = ptype.getPackage
+
+      if (packaje.getName == "java.lang") {
+        return ptype.getSimpleName
       }
 
       return ptype.getName
@@ -80,7 +109,6 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
 
       val getter: String =
         s"""        // ${prop} : ${propertyDescriptor.getPropertyType.getName}
-           |        // writable: ${propertyDescriptor.isWritable}
            |        public ${ptype} ${getterName}() {
            |            return (${ptype}) wrapped.getPropertyValue(${propToConstName(prop)});
            |        }
@@ -98,7 +126,7 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
       getter + setter
     }.mkString("\n")
 
-    def descToConstName(descriptor: RepositoryItemDescriptor) = s"""${descriptor.getItemDescriptorName.toUpperCase}_DESC"""
+    def descToConstName(descriptor: RepositoryItemDescriptor) = validIdent(s"""${descriptor.getItemDescriptorName.toUpperCase}_DESC""")
 
     def itemConsts(): String = itemDescriptors.map { desc =>
       s"""    public static final String ${descToConstName(desc)} = "${desc.getItemDescriptorName}";"""
@@ -106,7 +134,7 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
 
     val itemClasses = itemDescriptors.map { desc =>
       val name = desc.getItemDescriptorName;
-      val className = name.capitalize + "Item";
+      val className = validIdent(name.capitalize) + "Item";
 
       val propLines = properties(desc);
 
@@ -131,10 +159,11 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
       """.stripMargin
     }.mkString("\n")
 
-    def viewToConst(view: RepositoryView) = s"""${view.getViewName.toUpperCase}_VIEW"""
+    def viewToConst(view: RepositoryView) = validIdent(s"""${view.getViewName.toUpperCase}_VIEW""")
 
     val viewClasses = views.map { view =>
-      val className = s"""${view.getViewName.capitalize}View""";
+
+      val className = s"""${validIdent(view.getViewName.capitalize)}View""";
 
       s"""
          |    // VIEW : ${view.getViewName}
@@ -283,16 +312,16 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
        |}
        |
        |
-       |public class $className {
+       |public class $wrapperClassName {
        |
        |    private GSARepository wrapped;
        |
-       |    private $className(final GSARepository pWrapped) {
+       |    private $wrapperClassName(final GSARepository pWrapped) {
        |        this.wrapped = pWrapped;
        |    }
        |
-       |    public static $className wrap(final GSARepository pRepository) {
-       |        return new $className(pRepository);
+       |    public static $wrapperClassName wrap(final GSARepository pRepository) {
+       |        return new $wrapperClassName(pRepository);
        |    }
        |
        |    // Utilily methods

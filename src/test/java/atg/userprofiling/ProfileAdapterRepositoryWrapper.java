@@ -2,7 +2,129 @@ package atg.userprofiling;
 
 import atg.adapter.gsa.GSARepository;
 import atg.repository.MutableRepositoryItem;
+import atg.repository.Query;
+import atg.repository.QueryBuilder;
+import atg.repository.QueryOptions;
+import atg.repository.Repository;
+import atg.repository.RepositoryException;
 import atg.repository.RepositoryItem;
+import atg.repository.RepositoryItemDescriptor;
+import atg.repository.RepositoryView;
+import atg.repository.SortDirectives;
+
+import java.util.Collection;
+
+abstract class RepositoryItemImpl implements MutableRepositoryItem {
+
+    protected MutableRepositoryItem wrapped;
+
+    public MutableRepositoryItem getWrapped() {
+        return wrapped;
+    }
+
+    @Override
+    public void setPropertyValue(String pS, Object pO) {
+        wrapped.setPropertyValue(pS, pO);
+    }
+
+    @Override
+    public String getRepositoryId() {
+        return wrapped.getRepositoryId();
+    }
+
+    @Override
+    public Object getPropertyValue(String pS) {
+        return wrapped.getPropertyValue(pS);
+    }
+
+    @Override
+    public Repository getRepository() {
+        return wrapped.getRepository();
+    }
+
+    @Override
+    public RepositoryItemDescriptor getItemDescriptor() throws RepositoryException {
+        return wrapped.getItemDescriptor();
+    }
+
+    @Override
+    public boolean isTransient() {
+        return wrapped.isTransient();
+    }
+
+    @Override
+    public Collection<String> getContextMemberships() throws RepositoryException {
+        return wrapped.getContextMemberships();
+    }
+
+    @Override
+    public String getItemDisplayName() {
+        return wrapped.getItemDisplayName();
+    }
+
+}
+
+abstract class RepositoryViewImpl implements RepositoryView {
+
+    protected RepositoryView wrapped;
+
+    @Override
+    public String getViewName() {
+        return wrapped.getViewName();
+    }
+
+    @Override
+    public RepositoryItemDescriptor getItemDescriptor() throws RepositoryException {
+        return wrapped.getItemDescriptor();
+    }
+
+    @Override
+    public QueryBuilder getQueryBuilder() {
+        return wrapped.getQueryBuilder();
+    }
+
+    @Override
+    public RepositoryItem[] executeQuery(Query pQuery) throws RepositoryException {
+        return wrapped.executeQuery(pQuery);
+    }
+
+    @Override
+    public RepositoryItem[] executeQuery(Query pQuery, SortDirectives pSortDirectives) throws RepositoryException {
+        return wrapped.executeQuery(pQuery, pSortDirectives);
+    }
+
+    @Override
+    public RepositoryItem[] executeQuery(Query pQuery, int pI) throws RepositoryException {
+        return wrapped.executeQuery(pQuery, pI);
+    }
+
+    @Override
+    public RepositoryItem[] executeQuery(Query pQuery, int pI, SortDirectives pSortDirectives) throws RepositoryException {
+        return wrapped.executeQuery(pQuery, pI, pSortDirectives);
+    }
+
+    @Override
+    public RepositoryItem[] executeQuery(Query pQuery, int pI, int pI1) throws RepositoryException {
+        return wrapped.executeQuery(pQuery, pI, pI1);
+    }
+
+    @Override
+    public RepositoryItem[] executeQuery(Query pQuery, int pI, int pI1, SortDirectives pSortDirectives)
+            throws RepositoryException {
+        return wrapped.executeQuery(pQuery, pI, pI1, pSortDirectives);
+    }
+
+    @Override
+    public RepositoryItem[] executeQuery(Query pQuery, QueryOptions pQueryOptions) throws RepositoryException {
+        return wrapped.executeQuery(pQuery, pQueryOptions);
+    }
+
+    @Override
+    public int executeCountQuery(Query pQuery) throws RepositoryException {
+        return wrapped.executeCountQuery(pQuery);
+    }
+}
+
 
 public class ProfileAdapterRepositoryWrapper {
 
@@ -16,47 +138,60 @@ public class ProfileAdapterRepositoryWrapper {
         return new ProfileAdapterRepositoryWrapper(pRepository);
     }
 
-    // user
-    public static class UserItem {
-
-        public static final String SECURITYSTATUS_PROP="securityStatus";
-        public static final String DESCRIPTION_PROP="description";
-        public static final String EMAIL_PROP="email";
-        public static final String PASSWORD_PROP="password";
-        public static final String REALMID_PROP="realmId";
-        public static final String LASTNAME_PROP="lastName";
-        public static final String GENDER_PROP="gender";
-        public static final String PARENTORGANIZATION_PROP="parentOrganization";
-        public static final String LASTPASSWORDUPDATE_PROP="lastPasswordUpdate";
-        public static final String PASSWORDKEYDERIVATIONFUNCTION_PROP="passwordKeyDerivationFunction";
-        public static final String ANCESTORS_PROP="ancestors";
-        public static final String RECEIVEEMAIL_PROP="receiveEmail";
-        public static final String REGISTRATIONDATE_PROP="registrationDate";
-        public static final String PASSWORDSALT_PROP="passwordSalt";
-        public static final String DATEOFBIRTH_PROP="dateOfBirth";
-        public static final String MEMBER_PROP="member";
-        public static final String FIRSTNAME_PROP="firstName";
-        public static final String ROLES_PROP="roles";
-        public static final String LOGIN_PROP="login";
-        public static final String HOMEADDRESS_PROP="homeAddress";
-        public static final String MAILINGS_PROP="mailings";
-        public static final String EMAILSTATUS_PROP="emailStatus";
-        public static final String ID_PROP="id";
-        public static final String LASTEMAILED_PROP="lastEmailed";
-        public static final String AUTOLOGIN_PROP="autoLogin";
-        public static final String LOCALE_PROP="locale";
-        public static final String USERTYPE_PROP="userType";
-        public static final String LASTACTIVITY_PROP="lastActivity";
-        public static final String PREVIOUSPASSWORDS_PROP="previousPasswords";
-        public static final String SECONDARYORGANIZATIONS_PROP="secondaryOrganizations";
-        public static final String MIDDLENAME_PROP="middleName";
-        public static final String GENERATEDPASSWORD_PROP="generatedPassword";
-
-        private MutableRepositoryItem wrapped;
-
-        public MutableRepositoryItem getWrapped() {
-            return wrapped;
+    // Utilily methods
+    private void validateNonBlank(final String pString, final String pMessage) {
+        if (pString == null || pString.length() == 0 || pString.trim().length() == 0) {
+            throw new IllegalArgumentException(pMessage);
         }
+    }
+
+    public static final String USER_DESC = "user";
+    public static final String CONTACTINFO_DESC = "contactInfo";
+    public static final String MAILING_DESC = "mailing";
+    public static final String MAILBATCH_DESC = "mailBatch";
+    public static final String MAILSERVER_DESC = "mailServer";
+    public static final String ROLE_DESC = "role";
+    public static final String ORGANIZATIONALROLE_DESC = "organizationalRole";
+    public static final String ORGANIZATION_DESC = "organization";
+    public static final String GENERICFOLDER_DESC = "genericFolder";
+    public static final String ROLEFOLDER_DESC = "roleFolder";
+    public static final String PROFILEREALM_DESC = "profileRealm";
+
+    // user
+    public static class UserItem extends RepositoryItemImpl {
+
+        public static final String SECURITYSTATUS_PROP = "securityStatus";
+        public static final String DESCRIPTION_PROP = "description";
+        public static final String EMAIL_PROP = "email";
+        public static final String PASSWORD_PROP = "password";
+        public static final String REALMID_PROP = "realmId";
+        public static final String LASTNAME_PROP = "lastName";
+        public static final String GENDER_PROP = "gender";
+        public static final String PARENTORGANIZATION_PROP = "parentOrganization";
+        public static final String LASTPASSWORDUPDATE_PROP = "lastPasswordUpdate";
+        public static final String PASSWORDKEYDERIVATIONFUNCTION_PROP = "passwordKeyDerivationFunction";
+        public static final String ANCESTORS_PROP = "ancestors";
+        public static final String RECEIVEEMAIL_PROP = "receiveEmail";
+        public static final String REGISTRATIONDATE_PROP = "registrationDate";
+        public static final String PASSWORDSALT_PROP = "passwordSalt";
+        public static final String DATEOFBIRTH_PROP = "dateOfBirth";
+        public static final String MEMBER_PROP = "member";
+        public static final String FIRSTNAME_PROP = "firstName";
+        public static final String ROLES_PROP = "roles";
+        public static final String LOGIN_PROP = "login";
+        public static final String HOMEADDRESS_PROP = "homeAddress";
+        public static final String MAILINGS_PROP = "mailings";
+        public static final String EMAILSTATUS_PROP = "emailStatus";
+        public static final String ID_PROP = "id";
+        public static final String LASTEMAILED_PROP = "lastEmailed";
+        public static final String AUTOLOGIN_PROP = "autoLogin";
+        public static final String LOCALE_PROP = "locale";
+        public static final String USERTYPE_PROP = "userType";
+        public static final String LASTACTIVITY_PROP = "lastActivity";
+        public static final String PREVIOUSPASSWORDS_PROP = "previousPasswords";
+        public static final String SECONDARYORGANIZATIONS_PROP = "secondaryOrganizations";
+        public static final String MIDDLENAME_PROP = "middleName";
+        public static final String GENERATEDPASSWORD_PROP = "generatedPassword";
 
         public UserItem(final MutableRepositoryItem pRepositoryItem) {
             wrapped = pRepositoryItem;
@@ -380,35 +515,35 @@ public class ProfileAdapterRepositoryWrapper {
         
 
     }
+
+    public UserItem getUserItem(final String itemId) throws RepositoryException {
+        validateNonBlank(itemId, "getUserItem: Item ID cannot be empty");
+        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, USER_DESC);
+        return new UserItem(item);
+    }
       
     // contactInfo
-    public static class ContactInfoItem {
+    public static class ContactInfoItem extends RepositoryItemImpl {
 
-        public static final String POSTALCODE_PROP="postalCode";
-        public static final String PREFIX_PROP="prefix";
-        public static final String CITY_PROP="city";
-        public static final String COUNTRY_PROP="country";
-        public static final String PHONENUMBER_PROP="phoneNumber";
-        public static final String LASTNAME_PROP="lastName";
-        public static final String STATE_PROP="state";
-        public static final String ADDRESS3_PROP="address3";
-        public static final String ADDRESS2_PROP="address2";
-        public static final String ADDRESS1_PROP="address1";
-        public static final String JOBTITLE_PROP="jobTitle";
-        public static final String OWNERID_PROP="ownerId";
-        public static final String FIRSTNAME_PROP="firstName";
-        public static final String FAXNUMBER_PROP="faxNumber";
-        public static final String COMPANYNAME_PROP="companyName";
-        public static final String COUNTY_PROP="county";
-        public static final String ID_PROP="id";
-        public static final String SUFFIX_PROP="suffix";
-        public static final String MIDDLENAME_PROP="middleName";
-
-        private MutableRepositoryItem wrapped;
-
-        public MutableRepositoryItem getWrapped() {
-            return wrapped;
-        }
+        public static final String POSTALCODE_PROP = "postalCode";
+        public static final String PREFIX_PROP = "prefix";
+        public static final String CITY_PROP = "city";
+        public static final String COUNTRY_PROP = "country";
+        public static final String PHONENUMBER_PROP = "phoneNumber";
+        public static final String LASTNAME_PROP = "lastName";
+        public static final String STATE_PROP = "state";
+        public static final String ADDRESS3_PROP = "address3";
+        public static final String ADDRESS2_PROP = "address2";
+        public static final String ADDRESS1_PROP = "address1";
+        public static final String JOBTITLE_PROP = "jobTitle";
+        public static final String OWNERID_PROP = "ownerId";
+        public static final String FIRSTNAME_PROP = "firstName";
+        public static final String FAXNUMBER_PROP = "faxNumber";
+        public static final String COMPANYNAME_PROP = "companyName";
+        public static final String COUNTY_PROP = "county";
+        public static final String ID_PROP = "id";
+        public static final String SUFFIX_PROP = "suffix";
+        public static final String MIDDLENAME_PROP = "middleName";
 
         public ContactInfoItem(final MutableRepositoryItem pRepositoryItem) {
             wrapped = pRepositoryItem;
@@ -606,47 +741,47 @@ public class ProfileAdapterRepositoryWrapper {
         
 
     }
+
+    public ContactInfoItem getContactInfoItem(final String itemId) throws RepositoryException {
+        validateNonBlank(itemId, "getContactInfoItem: Item ID cannot be empty");
+        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, CONTACTINFO_DESC);
+        return new ContactInfoItem(item);
+    }
       
     // mailing
-    public static class MailingItem {
+    public static class MailingItem extends RepositoryItemImpl {
 
-        public static final String PARAMS_PROP="params";
-        public static final String BATCHEXECID_PROP="batchExecId";
-        public static final String BCC_PROP="bcc";
-        public static final String FROM_PROP="from";
-        public static final String SUBJECT_PROP="subject";
-        public static final String UNIQSERVERID_PROP="uniqServerId";
-        public static final String NUMBOUNCES_PROP="numBounces";
-        public static final String STARTTIME_PROP="startTime";
-        public static final String IGNORECONTACTFATIGUE_PROP="ignoreContactFatigue";
-        public static final String EMAILADDRESSES_PROP="emailAddresses";
-        public static final String SITEID_PROP="siteId";
-        public static final String RECIPIENTS_PROP="recipients";
-        public static final String NUMSKIPPED_PROP="numSkipped";
-        public static final String FILLFROMTEMPLATE_PROP="fillFromTemplate";
-        public static final String CC_PROP="cc";
-        public static final String BATCHSIZE_PROP="batchSize";
-        public static final String STATUS_PROP="status";
-        public static final String TRACKINGDATA_PROP="trackingData";
-        public static final String ALTTEMPLATE_PROP="altTemplate";
-        public static final String SENDASTEXT_PROP="sendAsText";
-        public static final String TEMPLATE_PROP="template";
-        public static final String ID_PROP="id";
-        public static final String NUMSENT_PROP="numSent";
-        public static final String NUMERRORS_PROP="numErrors";
-        public static final String BATCHED_PROP="batched";
-        public static final String ENDTIME_PROP="endTime";
-        public static final String REPLYTO_PROP="replyto";
-        public static final String NUMSOFTBOUNCES_PROP="numSoftBounces";
-        public static final String NUMTOSEND_PROP="numToSend";
-        public static final String NAME_PROP="name";
-        public static final String SENDASHTML_PROP="sendAsHtml";
-
-        private MutableRepositoryItem wrapped;
-
-        public MutableRepositoryItem getWrapped() {
-            return wrapped;
-        }
+        public static final String PARAMS_PROP = "params";
+        public static final String BATCHEXECID_PROP = "batchExecId";
+        public static final String BCC_PROP = "bcc";
+        public static final String FROM_PROP = "from";
+        public static final String SUBJECT_PROP = "subject";
+        public static final String UNIQSERVERID_PROP = "uniqServerId";
+        public static final String NUMBOUNCES_PROP = "numBounces";
+        public static final String STARTTIME_PROP = "startTime";
+        public static final String IGNORECONTACTFATIGUE_PROP = "ignoreContactFatigue";
+        public static final String EMAILADDRESSES_PROP = "emailAddresses";
+        public static final String SITEID_PROP = "siteId";
+        public static final String RECIPIENTS_PROP = "recipients";
+        public static final String NUMSKIPPED_PROP = "numSkipped";
+        public static final String FILLFROMTEMPLATE_PROP = "fillFromTemplate";
+        public static final String CC_PROP = "cc";
+        public static final String BATCHSIZE_PROP = "batchSize";
+        public static final String STATUS_PROP = "status";
+        public static final String TRACKINGDATA_PROP = "trackingData";
+        public static final String ALTTEMPLATE_PROP = "altTemplate";
+        public static final String SENDASTEXT_PROP = "sendAsText";
+        public static final String TEMPLATE_PROP = "template";
+        public static final String ID_PROP = "id";
+        public static final String NUMSENT_PROP = "numSent";
+        public static final String NUMERRORS_PROP = "numErrors";
+        public static final String BATCHED_PROP = "batched";
+        public static final String ENDTIME_PROP = "endTime";
+        public static final String REPLYTO_PROP = "replyto";
+        public static final String NUMSOFTBOUNCES_PROP = "numSoftBounces";
+        public static final String NUMTOSEND_PROP = "numToSend";
+        public static final String NAME_PROP = "name";
+        public static final String SENDASHTML_PROP = "sendAsHtml";
 
         public MailingItem(final MutableRepositoryItem pRepositoryItem) {
             wrapped = pRepositoryItem;
@@ -964,28 +1099,28 @@ public class ProfileAdapterRepositoryWrapper {
         
 
     }
+
+    public MailingItem getMailingItem(final String itemId) throws RepositoryException {
+        validateNonBlank(itemId, "getMailingItem: Item ID cannot be empty");
+        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, MAILING_DESC);
+        return new MailingItem(item);
+    }
       
     // mailBatch
-    public static class MailBatchItem {
+    public static class MailBatchItem extends RepositoryItemImpl {
 
-        public static final String UNIQSERVERID_PROP="uniqServerId";
-        public static final String NUMBOUNCES_PROP="numBounces";
-        public static final String STARTTIME_PROP="startTime";
-        public static final String NUMSKIPPED_PROP="numSkipped";
-        public static final String STARTIDX_PROP="startIdx";
-        public static final String STATUS_PROP="status";
-        public static final String MAILINGID_PROP="mailingId";
-        public static final String NUMSENT_PROP="numSent";
-        public static final String NUMERRORS_PROP="numErrors";
-        public static final String ENDTIME_PROP="endTime";
-        public static final String SUMMARIZED_PROP="summarized";
-        public static final String NUMTOSEND_PROP="numToSend";
-
-        private MutableRepositoryItem wrapped;
-
-        public MutableRepositoryItem getWrapped() {
-            return wrapped;
-        }
+        public static final String UNIQSERVERID_PROP = "uniqServerId";
+        public static final String NUMBOUNCES_PROP = "numBounces";
+        public static final String STARTTIME_PROP = "startTime";
+        public static final String NUMSKIPPED_PROP = "numSkipped";
+        public static final String STARTIDX_PROP = "startIdx";
+        public static final String STATUS_PROP = "status";
+        public static final String MAILINGID_PROP = "mailingId";
+        public static final String NUMSENT_PROP = "numSent";
+        public static final String NUMERRORS_PROP = "numErrors";
+        public static final String ENDTIME_PROP = "endTime";
+        public static final String SUMMARIZED_PROP = "summarized";
+        public static final String NUMTOSEND_PROP = "numToSend";
 
         public MailBatchItem(final MutableRepositoryItem pRepositoryItem) {
             wrapped = pRepositoryItem;
@@ -1113,18 +1248,18 @@ public class ProfileAdapterRepositoryWrapper {
         
 
     }
+
+    public MailBatchItem getMailBatchItem(final String itemId) throws RepositoryException {
+        validateNonBlank(itemId, "getMailBatchItem: Item ID cannot be empty");
+        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, MAILBATCH_DESC);
+        return new MailBatchItem(item);
+    }
       
     // mailServer
-    public static class MailServerItem {
+    public static class MailServerItem extends RepositoryItemImpl {
 
-        public static final String UNIQSERVERID_PROP="uniqServerId";
-        public static final String LASTUPDATED_PROP="lastUpdated";
-
-        private MutableRepositoryItem wrapped;
-
-        public MutableRepositoryItem getWrapped() {
-            return wrapped;
-        }
+        public static final String UNIQSERVERID_PROP = "uniqServerId";
+        public static final String LASTUPDATED_PROP = "lastUpdated";
 
         public MailServerItem(final MutableRepositoryItem pRepositoryItem) {
             wrapped = pRepositoryItem;
@@ -1152,22 +1287,22 @@ public class ProfileAdapterRepositoryWrapper {
         
 
     }
+
+    public MailServerItem getMailServerItem(final String itemId) throws RepositoryException {
+        validateNonBlank(itemId, "getMailServerItem: Item ID cannot be empty");
+        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, MAILSERVER_DESC);
+        return new MailServerItem(item);
+    }
       
     // role
-    public static class RoleItem {
+    public static class RoleItem extends RepositoryItemImpl {
 
-        public static final String DESCRIPTION_PROP="description";
-        public static final String VERSION_PROP="version";
-        public static final String ID_PROP="id";
-        public static final String RELATIVETO_PROP="relativeTo";
-        public static final String TYPE_PROP="type";
-        public static final String NAME_PROP="name";
-
-        private MutableRepositoryItem wrapped;
-
-        public MutableRepositoryItem getWrapped() {
-            return wrapped;
-        }
+        public static final String DESCRIPTION_PROP = "description";
+        public static final String VERSION_PROP = "version";
+        public static final String ID_PROP = "id";
+        public static final String RELATIVETO_PROP = "relativeTo";
+        public static final String TYPE_PROP = "type";
+        public static final String NAME_PROP = "name";
 
         public RoleItem(final MutableRepositoryItem pRepositoryItem) {
             wrapped = pRepositoryItem;
@@ -1231,23 +1366,23 @@ public class ProfileAdapterRepositoryWrapper {
         
 
     }
+
+    public RoleItem getRoleItem(final String itemId) throws RepositoryException {
+        validateNonBlank(itemId, "getRoleItem: Item ID cannot be empty");
+        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, ROLE_DESC);
+        return new RoleItem(item);
+    }
       
     // organizationalRole
-    public static class OrganizationalRoleItem {
+    public static class OrganizationalRoleItem extends RepositoryItemImpl {
 
-        public static final String DESCRIPTION_PROP="description";
-        public static final String VERSION_PROP="version";
-        public static final String FUNCTION_PROP="function";
-        public static final String ID_PROP="id";
-        public static final String RELATIVETO_PROP="relativeTo";
-        public static final String TYPE_PROP="type";
-        public static final String NAME_PROP="name";
-
-        private MutableRepositoryItem wrapped;
-
-        public MutableRepositoryItem getWrapped() {
-            return wrapped;
-        }
+        public static final String DESCRIPTION_PROP = "description";
+        public static final String VERSION_PROP = "version";
+        public static final String FUNCTION_PROP = "function";
+        public static final String ID_PROP = "id";
+        public static final String RELATIVETO_PROP = "relativeTo";
+        public static final String TYPE_PROP = "type";
+        public static final String NAME_PROP = "name";
 
         public OrganizationalRoleItem(final MutableRepositoryItem pRepositoryItem) {
             wrapped = pRepositoryItem;
@@ -1321,27 +1456,27 @@ public class ProfileAdapterRepositoryWrapper {
         
 
     }
+
+    public OrganizationalRoleItem getOrganizationalRoleItem(final String itemId) throws RepositoryException {
+        validateNonBlank(itemId, "getOrganizationalRoleItem: Item ID cannot be empty");
+        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, ORGANIZATIONALROLE_DESC);
+        return new OrganizationalRoleItem(item);
+    }
       
     // organization
-    public static class OrganizationItem {
+    public static class OrganizationItem extends RepositoryItemImpl {
 
-        public static final String RELATIVEROLES_PROP="relativeRoles";
-        public static final String DESCRIPTION_PROP="description";
-        public static final String ANCESTORORGANIZATIONS_PROP="ancestorOrganizations";
-        public static final String PARENTORGANIZATION_PROP="parentOrganization";
-        public static final String ROLES_PROP="roles";
-        public static final String CHILDORGANIZATIONS_PROP="childOrganizations";
-        public static final String SECONDARYMEMBERS_PROP="secondaryMembers";
-        public static final String ALLMEMBERS_PROP="allMembers";
-        public static final String ID_PROP="id";
-        public static final String MEMBERS_PROP="members";
-        public static final String NAME_PROP="name";
-
-        private MutableRepositoryItem wrapped;
-
-        public MutableRepositoryItem getWrapped() {
-            return wrapped;
-        }
+        public static final String RELATIVEROLES_PROP = "relativeRoles";
+        public static final String DESCRIPTION_PROP = "description";
+        public static final String ANCESTORORGANIZATIONS_PROP = "ancestorOrganizations";
+        public static final String PARENTORGANIZATION_PROP = "parentOrganization";
+        public static final String ROLES_PROP = "roles";
+        public static final String CHILDORGANIZATIONS_PROP = "childOrganizations";
+        public static final String SECONDARYMEMBERS_PROP = "secondaryMembers";
+        public static final String ALLMEMBERS_PROP = "allMembers";
+        public static final String ID_PROP = "id";
+        public static final String MEMBERS_PROP = "members";
+        public static final String NAME_PROP = "name";
 
         public OrganizationItem(final MutableRepositoryItem pRepositoryItem) {
             wrapped = pRepositoryItem;
@@ -1455,23 +1590,23 @@ public class ProfileAdapterRepositoryWrapper {
         
 
     }
+
+    public OrganizationItem getOrganizationItem(final String itemId) throws RepositoryException {
+        validateNonBlank(itemId, "getOrganizationItem: Item ID cannot be empty");
+        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, ORGANIZATION_DESC);
+        return new OrganizationItem(item);
+    }
       
     // genericFolder
-    public static class GenericFolderItem {
+    public static class GenericFolderItem extends RepositoryItemImpl {
 
-        public static final String DESCRIPTION_PROP="description";
-        public static final String CHILDFOLDERS_PROP="childFolders";
-        public static final String CHILDITEMS_PROP="childItems";
-        public static final String PARENT_PROP="parent";
-        public static final String ID_PROP="id";
-        public static final String TYPE_PROP="type";
-        public static final String NAME_PROP="name";
-
-        private MutableRepositoryItem wrapped;
-
-        public MutableRepositoryItem getWrapped() {
-            return wrapped;
-        }
+        public static final String DESCRIPTION_PROP = "description";
+        public static final String CHILDFOLDERS_PROP = "childFolders";
+        public static final String CHILDITEMS_PROP = "childItems";
+        public static final String PARENT_PROP = "parent";
+        public static final String ID_PROP = "id";
+        public static final String TYPE_PROP = "type";
+        public static final String NAME_PROP = "name";
 
         public GenericFolderItem(final MutableRepositoryItem pRepositoryItem) {
             wrapped = pRepositoryItem;
@@ -1549,23 +1684,23 @@ public class ProfileAdapterRepositoryWrapper {
         
 
     }
+
+    public GenericFolderItem getGenericFolderItem(final String itemId) throws RepositoryException {
+        validateNonBlank(itemId, "getGenericFolderItem: Item ID cannot be empty");
+        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, GENERICFOLDER_DESC);
+        return new GenericFolderItem(item);
+    }
       
     // roleFolder
-    public static class RoleFolderItem {
+    public static class RoleFolderItem extends RepositoryItemImpl {
 
-        public static final String DESCRIPTION_PROP="description";
-        public static final String CHILDFOLDERS_PROP="childFolders";
-        public static final String CHILDITEMS_PROP="childItems";
-        public static final String PARENT_PROP="parent";
-        public static final String ID_PROP="id";
-        public static final String TYPE_PROP="type";
-        public static final String NAME_PROP="name";
-
-        private MutableRepositoryItem wrapped;
-
-        public MutableRepositoryItem getWrapped() {
-            return wrapped;
-        }
+        public static final String DESCRIPTION_PROP = "description";
+        public static final String CHILDFOLDERS_PROP = "childFolders";
+        public static final String CHILDITEMS_PROP = "childItems";
+        public static final String PARENT_PROP = "parent";
+        public static final String ID_PROP = "id";
+        public static final String TYPE_PROP = "type";
+        public static final String NAME_PROP = "name";
 
         public RoleFolderItem(final MutableRepositoryItem pRepositoryItem) {
             wrapped = pRepositoryItem;
@@ -1643,19 +1778,19 @@ public class ProfileAdapterRepositoryWrapper {
         
 
     }
+
+    public RoleFolderItem getRoleFolderItem(final String itemId) throws RepositoryException {
+        validateNonBlank(itemId, "getRoleFolderItem: Item ID cannot be empty");
+        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, ROLEFOLDER_DESC);
+        return new RoleFolderItem(item);
+    }
       
     // profileRealm
-    public static class ProfileRealmItem {
+    public static class ProfileRealmItem extends RepositoryItemImpl {
 
-        public static final String DESCRIPTION_PROP="description";
-        public static final String ID_PROP="id";
-        public static final String NAME_PROP="name";
-
-        private MutableRepositoryItem wrapped;
-
-        public MutableRepositoryItem getWrapped() {
-            return wrapped;
-        }
+        public static final String DESCRIPTION_PROP = "description";
+        public static final String ID_PROP = "id";
+        public static final String NAME_PROP = "name";
 
         public ProfileRealmItem(final MutableRepositoryItem pRepositoryItem) {
             wrapped = pRepositoryItem;
@@ -1693,7 +1828,200 @@ public class ProfileAdapterRepositoryWrapper {
         
 
     }
+
+    public ProfileRealmItem getProfileRealmItem(final String itemId) throws RepositoryException {
+        validateNonBlank(itemId, "getProfileRealmItem: Item ID cannot be empty");
+        final MutableRepositoryItem item = (MutableRepositoryItem)wrapped.getItem(itemId, PROFILEREALM_DESC);
+        return new ProfileRealmItem(item);
+    }
       
 
+
+    // VIEW : user
+    public static final String USER_VIEW = "user";
+
+    public static class UserView extends RepositoryViewImpl {
+
+        public UserView(RepositoryView pRepositoryView) {
+            wrapped = pRepositoryView;
+        }
+    }
+
+    public UserView getUserView() throws RepositoryException {
+        final RepositoryView view = wrapped.getView(USER_VIEW);
+        return new UserView(view);
+    }
+
+       
+
+    // VIEW : contactInfo
+    public static final String CONTACTINFO_VIEW = "contactInfo";
+
+    public static class ContactInfoView extends RepositoryViewImpl {
+
+        public ContactInfoView(RepositoryView pRepositoryView) {
+            wrapped = pRepositoryView;
+        }
+    }
+
+    public ContactInfoView getContactInfoView() throws RepositoryException {
+        final RepositoryView view = wrapped.getView(CONTACTINFO_VIEW);
+        return new ContactInfoView(view);
+    }
+
+       
+
+    // VIEW : mailing
+    public static final String MAILING_VIEW = "mailing";
+
+    public static class MailingView extends RepositoryViewImpl {
+
+        public MailingView(RepositoryView pRepositoryView) {
+            wrapped = pRepositoryView;
+        }
+    }
+
+    public MailingView getMailingView() throws RepositoryException {
+        final RepositoryView view = wrapped.getView(MAILING_VIEW);
+        return new MailingView(view);
+    }
+
+       
+
+    // VIEW : mailBatch
+    public static final String MAILBATCH_VIEW = "mailBatch";
+
+    public static class MailBatchView extends RepositoryViewImpl {
+
+        public MailBatchView(RepositoryView pRepositoryView) {
+            wrapped = pRepositoryView;
+        }
+    }
+
+    public MailBatchView getMailBatchView() throws RepositoryException {
+        final RepositoryView view = wrapped.getView(MAILBATCH_VIEW);
+        return new MailBatchView(view);
+    }
+
+       
+
+    // VIEW : mailServer
+    public static final String MAILSERVER_VIEW = "mailServer";
+
+    public static class MailServerView extends RepositoryViewImpl {
+
+        public MailServerView(RepositoryView pRepositoryView) {
+            wrapped = pRepositoryView;
+        }
+    }
+
+    public MailServerView getMailServerView() throws RepositoryException {
+        final RepositoryView view = wrapped.getView(MAILSERVER_VIEW);
+        return new MailServerView(view);
+    }
+
+       
+
+    // VIEW : role
+    public static final String ROLE_VIEW = "role";
+
+    public static class RoleView extends RepositoryViewImpl {
+
+        public RoleView(RepositoryView pRepositoryView) {
+            wrapped = pRepositoryView;
+        }
+    }
+
+    public RoleView getRoleView() throws RepositoryException {
+        final RepositoryView view = wrapped.getView(ROLE_VIEW);
+        return new RoleView(view);
+    }
+
+       
+
+    // VIEW : organizationalRole
+    public static final String ORGANIZATIONALROLE_VIEW = "organizationalRole";
+
+    public static class OrganizationalRoleView extends RepositoryViewImpl {
+
+        public OrganizationalRoleView(RepositoryView pRepositoryView) {
+            wrapped = pRepositoryView;
+        }
+    }
+
+    public OrganizationalRoleView getOrganizationalRoleView() throws RepositoryException {
+        final RepositoryView view = wrapped.getView(ORGANIZATIONALROLE_VIEW);
+        return new OrganizationalRoleView(view);
+    }
+
+       
+
+    // VIEW : organization
+    public static final String ORGANIZATION_VIEW = "organization";
+
+    public static class OrganizationView extends RepositoryViewImpl {
+
+        public OrganizationView(RepositoryView pRepositoryView) {
+            wrapped = pRepositoryView;
+        }
+    }
+
+    public OrganizationView getOrganizationView() throws RepositoryException {
+        final RepositoryView view = wrapped.getView(ORGANIZATION_VIEW);
+        return new OrganizationView(view);
+    }
+
+       
+
+    // VIEW : genericFolder
+    public static final String GENERICFOLDER_VIEW = "genericFolder";
+
+    public static class GenericFolderView extends RepositoryViewImpl {
+
+        public GenericFolderView(RepositoryView pRepositoryView) {
+            wrapped = pRepositoryView;
+        }
+    }
+
+    public GenericFolderView getGenericFolderView() throws RepositoryException {
+        final RepositoryView view = wrapped.getView(GENERICFOLDER_VIEW);
+        return new GenericFolderView(view);
+    }
+
+       
+
+    // VIEW : roleFolder
+    public static final String ROLEFOLDER_VIEW = "roleFolder";
+
+    public static class RoleFolderView extends RepositoryViewImpl {
+
+        public RoleFolderView(RepositoryView pRepositoryView) {
+            wrapped = pRepositoryView;
+        }
+    }
+
+    public RoleFolderView getRoleFolderView() throws RepositoryException {
+        final RepositoryView view = wrapped.getView(ROLEFOLDER_VIEW);
+        return new RoleFolderView(view);
+    }
+
+       
+
+    // VIEW : profileRealm
+    public static final String PROFILEREALM_VIEW = "profileRealm";
+
+    public static class ProfileRealmView extends RepositoryViewImpl {
+
+        public ProfileRealmView(RepositoryView pRepositoryView) {
+            wrapped = pRepositoryView;
+        }
+    }
+
+    public ProfileRealmView getProfileRealmView() throws RepositoryException {
+        final RepositoryView view = wrapped.getView(PROFILEREALM_VIEW);
+        return new ProfileRealmView(view);
+    }
+
+       
 }
       

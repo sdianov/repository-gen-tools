@@ -16,14 +16,14 @@ object Test1 extends App {
 
   val mLogger = Logger.getLogger(classOf[Nothing])
 
-  val exportPath = Paths.get("f:/Work/Diez/GenTools/src/test/java");
-  val paths = List("/atg/userprofiling/ProfileAdapterRepository", "/atg/dynamo/service/jdbc/SDSRepository");
+  val exportPath = Paths.get("src/test/java");
+  val paths = List("/atg/commerce/catalog/ProductCatalog", "/atg/commerce/order/OrderRepository");
 
   mLogger.log(Level.INFO, "Start Nucleus.")
 
   System.setProperty("derby.locks.deadlockTrace", "true")
 
-  val mNucleus = NucleusTestUtils.startNucleusWithModules(Array[String]("DPS"), classOf[Nothing], classOf[Nothing].getName, "/atg/userprofiling/ProfileAdapterRepository")
+  val mNucleus = NucleusTestUtils.startNucleusWithModules(Array[String]("DPS", "DCS"), classOf[Nothing], classOf[Nothing].getName, "/atg/commerce/order/OrderRepository")
 
   val pairs = paths.map(x => x -> mNucleus.resolveName(x));
 
