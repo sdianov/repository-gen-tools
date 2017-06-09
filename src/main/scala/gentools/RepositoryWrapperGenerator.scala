@@ -16,7 +16,7 @@ import scala.collection.JavaConverters._
 
 class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
 
-  def validIdent(s : String) = s.replace("-", "_").replace(" ", "_")
+  def validIdent(s: String) = s.replace("-", "_").replace(" ", "_")
 
   def writeFiles(exportPath: Path): Unit = {
 
@@ -68,7 +68,7 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
       if (ptype.equals(classOf[RepositoryItem])) {
 
         val ctype = propertyDescriptor match {
-          case gsa : GSAPropertyDescriptor => gsa.getPropertyItemDescriptor.getItemDescriptorName
+          case gsa: GSAPropertyDescriptor => gsa.getPropertyItemDescriptor.getItemDescriptorName
           case x => x.getName
         }
         return s" /* $ctype */ RepositoryItem"
@@ -84,7 +84,7 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
         return s"java.util.Set<${compType.getName}>"
       }
 
-      if (ptype.isAssignableFrom(classOf[java.util.Map[_,_]])) {
+      if (ptype.isAssignableFrom(classOf[java.util.Map[_, _]])) {
         return s"java.util.Map<?,?>"
       }
 
@@ -198,6 +198,7 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
     s"""package $packageName;
        |
        |import atg.adapter.gsa.GSARepository;
+       |import atg.repository.MutableRepository;
        |import atg.repository.MutableRepositoryItem;
        |import atg.repository.Query;
        |import atg.repository.QueryBuilder;
@@ -327,7 +328,7 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
        |}
        |
        |
-       |public class $wrapperClassName {
+       |public class $wrapperClassName implements MutableRepository {
        |
        |    private GSARepository wrapped;
        |
@@ -347,6 +348,122 @@ class RepositoryWrapperGenerator(repositories: Map[String, MutableRepository]) {
        |    }
        |
        |${itemConsts()}
+       |
+       |    @Override @Deprecated
+       |    public MutableRepositoryItem getItemForUpdate(String pS) throws RepositoryException {
+       |        return wrapped.getItemForUpdate(pS);
+       |    }
+       |
+       |    @Override
+       |    public MutableRepositoryItem getItemForUpdate(String pS, String pS1) throws RepositoryException {
+       |        return wrapped.getItemForUpdate(pS, pS1);
+       |    }
+       |
+       |    @Override
+       |    public MutableRepositoryItem[] getItemsForUpdate(String[] pStrings) throws RepositoryException {
+       |        return wrapped.getItemsForUpdate(pStrings);
+       |    }
+       |
+       |    @Override
+       |    public MutableRepositoryItem[] getItemsForUpdate(String[] pStrings, String pS) throws RepositoryException {
+       |        return wrapped.getItemsForUpdate(pStrings, pS);
+       |    }
+       |
+       |    @Override
+       |    public MutableRepositoryItem createItem(String pS) throws RepositoryException {
+       |        return wrapped.createItem(pS);
+       |    }
+       |
+       |    @Override
+       |    public MutableRepositoryItem createItem(String pS, String pS1) throws RepositoryException {
+       |        return wrapped.createItem(pS, pS1);
+       |    }
+       |
+       |    @Override @Deprecated
+       |    public RepositoryItem addItem(RepositoryItem pRepositoryItem, String pS) throws RepositoryException {
+       |        return wrapped.addItem(pRepositoryItem, pS);
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItem addItem(MutableRepositoryItem pMutableRepositoryItem) throws RepositoryException {
+       |        return wrapped.addItem(pMutableRepositoryItem);
+       |    }
+       |
+       |    @Override
+       |    public void updateItem(MutableRepositoryItem pMutableRepositoryItem) throws RepositoryException {
+       |        wrapped.updateItem(pMutableRepositoryItem);
+       |    }
+       |
+       |    @Override @Deprecated
+       |    public void removeItem(String pS) throws RepositoryException {
+       |        wrapped.removeItem(pS);
+       |    }
+       |
+       |    @Override
+       |    public void removeItem(String pS, String pS1) throws RepositoryException {
+       |        wrapped.removeItem(pS, pS1);
+       |    }
+       |
+       |    @Override
+       |    public String getRepositoryName() {
+       |        return wrapped.getRepositoryName();
+       |    }
+       |
+       |    @Override @Deprecated
+       |    public RepositoryItem getItem(String pS) throws RepositoryException {
+       |        return getItem(pS);
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItem getItem(String pS, String pS1) throws RepositoryException {
+       |        return wrapped.getItem(pS, pS1);
+       |    }
+       |
+       |    @Override @Deprecated
+       |    public RepositoryItem[] getItems(String[] pStrings) throws RepositoryException {
+       |        return wrapped.getItems(pStrings);
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItem[] getItems(String[] pStrings, String pS) throws RepositoryException {
+       |        return wrapped.getItems(pStrings, pS);
+       |    }
+       |
+       |    @Override
+       |    public String getDefaultViewName() {
+       |        return wrapped.getDefaultViewName();
+       |    }
+       |
+       |    @Override
+       |    public String[] getViewNames() {
+       |        return wrapped.getViewNames();
+       |    }
+       |
+       |    @Override
+       |    public RepositoryView getView(String pS) throws RepositoryException {
+       |        return wrapped.getView(pS);
+       |    }
+       |
+       |    @Override
+       |    public RepositoryView getView(RepositoryItemDescriptor pRepositoryItemDescriptor) throws RepositoryException {
+       |        return getView(pRepositoryItemDescriptor);
+       |    }
+       |
+       |    @Override
+       |    public String[] getItemDescriptorNames() {
+       |        return wrapped.getItemDescriptorNames();
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItemDescriptor getItemDescriptor(String pS) throws RepositoryException {
+       |        return wrapped.getItemDescriptor(pS);
+       |    }
+       |
+       |    @Override
+       |    public RepositoryItemDescriptor getItemDescriptor(RepositoryItemDescriptor pRepositoryItemDescriptor)
+       |            throws RepositoryException {
+       |        return wrapped.getItemDescriptor(pRepositoryItemDescriptor);
+       |    }
        |
        |$itemClasses
        |
