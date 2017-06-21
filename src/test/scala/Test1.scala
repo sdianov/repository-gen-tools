@@ -1,6 +1,7 @@
 import java.nio.file.{Path, Paths}
 
 import gentools.RepositoryWrapperGenerator
+import gentools.data.GenerationInfo
 import org.apache.log4j.{Level, Logger}
 
 /**
@@ -16,7 +17,7 @@ object Test1 extends App {
 
   val mLogger = Logger.getLogger(classOf[Nothing])
 
-  val exportPath = Paths.get("src/test/java");
+  val exportPath = Paths.get("build/generated-sources");
   val paths = List("/atg/commerce/catalog/ProductCatalog", "/atg/commerce/order/OrderRepository");
 
   mLogger.log(Level.INFO, "Start Nucleus.")
@@ -27,11 +28,11 @@ object Test1 extends App {
 
   val pairs = paths.map(x => x -> mNucleus.resolveName(x));
 
-     val filtered = pairs.collect{
-       case (a, b: MutableRepository) => (a,b);
-     }
+  val filtered = pairs.collect {
+    case (a, b: MutableRepository) => (a, b);
+  }
 
-     val gen = new RepositoryWrapperGenerator(filtered.toMap);
+  val gen = new RepositoryWrapperGenerator(GenerationInfo(filtered.toMap));
 
 
   gen.writeFiles(exportPath)

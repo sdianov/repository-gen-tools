@@ -1,6 +1,7 @@
 import java.nio.file.Paths
 
 import gentools.RepositoryWrapperGenerator
+import gentools.data.GenerationInfo
 import org.apache.log4j.{Level, Logger}
 
 /**
@@ -28,7 +29,7 @@ object Test2 extends App {
     case (a, b: MutableRepository) => (a, b);
   }
 
-  val gen = new RepositoryWrapperGenerator(filtered.toMap);
+  val gen = new RepositoryWrapperGenerator(GenerationInfo(filtered.toMap));
 
 
   gen.writeFiles(exportPath)

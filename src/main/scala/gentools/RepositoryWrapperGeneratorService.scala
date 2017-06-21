@@ -7,6 +7,7 @@ import java.util
 import atg.adapter.gsa.GSARepository
 import atg.nucleus.GenericService
 import atg.repository.MutableRepository
+import gentools.data.GenerationInfo
 
 import scala.beans.BeanProperty
 import scala.collection.JavaConverters._
@@ -35,7 +36,7 @@ class RepositoryWrapperGeneratorService extends GenericService {
       case (a, b: MutableRepository) => (a,b);
     }
 
-    val gen = new RepositoryWrapperGenerator(filtered.toMap);
+    val gen = new RepositoryWrapperGenerator(GenerationInfo(filtered.toMap));
 
     gen.writeFiles(Paths.get(exportPath));
 
