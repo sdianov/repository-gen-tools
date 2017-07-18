@@ -7,6 +7,8 @@ import atg.nucleus.GenericService
 import atg.repository.RepositoryItemDescriptor
 import gentools.data.GenerationInfo
 import Utils._
+import atg.adapter.gsa.{GSAItemDescriptor, GSAPropertyDescriptor}
+import atg.beans.DynamicPropertyDescriptor
 
 /**
   * Created by Sergei_Dianov on 6/21/2017.
@@ -42,17 +44,65 @@ class EntitiesGenerator(info: GenerationInfo) {
 
       val className = validIdent( descriptor.getItemDescriptorName + "Entity").capitalize;
 
+      val gsaDesc = descriptor.asInstanceOf[GSAItemDescriptor];
+
+      val tableName = gsaDesc.getPrimaryTable.getName
+
       val outFile = new java.io.File(Paths.get(exportPath.toString, packagePath, className + ".java").toString);
       outFile.getParentFile.mkdirs();
 
       val pw = new PrintWriter(outFile)
 
-      val content =
+      val fields = descriptor.getPropertyNames().map { name =>
+
+        val desc = descriptor.getPropertyDescriptor(name);
+        val vtype = EntityUtils.typeMap(desc);
+
+        val column = desc match {
+          case gsa : GSAPropertyDescriptor => gsa.getColumnNames.mkString("|")
+          case _ => "???" + desc.getClass
+        }
+
+        s"""  @Column(name = "$column")
+           |    private $vtype $name;""".stripMargin
+      }.mkString("\n");
+
+      val accessors = descriptor.getPropertyNames.map{ name =>
+
+        val propertyDescriptor: DynamicPropertyDescriptor = descriptor.getPropertyDescriptor(name);
+
+        val ptype = EntityUtils.typeMap(propertyDescriptor)
+
+        val getterName = validIdent("get" + name.capitalize);
+        val setterName = validIdent("set" + name.capitalize);
+
         s"""
-           |package $packageName;
+           |    public $ptype $getterName() {
+           |        return $name;
+           |    }
            |
-           |public class $className {
+           |    public void $setterName($ptype $name) {
+           |      this.$name = $name;
+           |    }
+         """.stripMargin
+      }.mkString("\n")
+
+
+      val content =
+        s"""package $packageName;
            |
+           |import javax.persistence.Column;
+           |import javax.persistence.Entity;
+           |import javax.persistence.Table;
+           |import java.io.Serializable;
+           |
+           |@Entity
+           |@Table(name = "$tableName")
+           |public class $className implements Serializable {
+           |
+           |$fields
+           |
+           |$accessors
            |}
          """.stripMargin
 

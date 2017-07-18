@@ -13,7 +13,7 @@ object Test3 extends App {
 
   val exportPath = Paths.get("build/generated-sources");
 
-  val paths = List("/atg/commerce/catalog/ProductCatalog", "/atg/commerce/order/OrderRepository");
+  val paths = List("/atg/dynamo/security/AdminSqlRepository");
 
   System.setProperty("derby.locks.deadlockTrace", "true")
 
@@ -32,5 +32,11 @@ object Test3 extends App {
   val generator = new EntitiesGenerator(info);
 
   generator.writeFiles(exportPath);
+
+  import javax.persistence.EntityManagerFactory
+  import javax.persistence.Persistence
+
+  val emf = Persistence.createEntityManagerFactory("ru.letu_hiberproject")
+
 
 }
