@@ -60,6 +60,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.oracle.ateam</groupId>
             <artifactId>ateamDust</artifactId>
             <version>1.3.1</version>

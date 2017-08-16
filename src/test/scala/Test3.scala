@@ -13,11 +13,11 @@ object Test3 extends App {
 
   val exportPath = Paths.get("build/generated-sources");
 
-  val paths = List("/atg/dynamo/security/AdminSqlRepository");
+  val paths = List("/atg/dynamo/security/AdminSqlRepository", "/atg/multisite/SiteRepository");
 
   System.setProperty("derby.locks.deadlockTrace", "true")
 
-  val mNucleus = NucleusTestUtils.startNucleusWithModules(Array[String]("DPS", "DCS"), classOf[Nothing], classOf[Nothing].getName, "/atg/commerce/order/OrderRepository")
+  val mNucleus = NucleusTestUtils.startNucleusWithModules(Array[String]("DPS"), classOf[Nothing], classOf[Nothing].getName)
 
   val pairs = paths.map(x => x -> mNucleus.resolveName(x));
 
@@ -36,7 +36,8 @@ object Test3 extends App {
   import javax.persistence.EntityManagerFactory
   import javax.persistence.Persistence
 
-  val emf = Persistence.createEntityManagerFactory("ru.letu_hiberproject")
+
+ // val emf = Persistence.createEntityManagerFactory("ru.letu_hiberproject")
 
 
 }

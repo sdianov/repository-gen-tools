@@ -230,7 +230,7 @@ class RepositoryWrapperFile
        |
        |    @Override @Deprecated
        |    public RepositoryItem getItem(String pS) throws RepositoryException {
-       |        return getItem(pS);
+       |        return wrapped.getItem(pS);
        |    }
        |
        |    @Override
@@ -265,7 +265,7 @@ class RepositoryWrapperFile
        |
        |    @Override
        |    public RepositoryView getView(RepositoryItemDescriptor pRepositoryItemDescriptor) throws RepositoryException {
-       |        return getView(pRepositoryItemDescriptor);
+       |        return wrapped.getView(pRepositoryItemDescriptor);
        |    }
        |
        |    @Override

@@ -91,6 +91,8 @@ class EntitiesGenerator(info: GenerationInfo) {
       val content =
         s"""package $packageName;
            |
+           |import atg.repository.RepositoryItem;
+           |
            |import javax.persistence.Column;
            |import javax.persistence.Entity;
            |import javax.persistence.Table;
